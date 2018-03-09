@@ -22,15 +22,11 @@ def create_app(config_name):
     # Connected app to the DB
     db.init_app(app)
 
-    from flask import request, jsonify, abort
-
     @app.route('/', methods=['GET'])
     def test():
         # TODO routing of requests
         message = "OttoBot server is running."
-
-        welcome_response = ResponseBuilder.create_response(message)
-        return ResponseBuilder.create_response(message)
+        return ResponseBuilder.create_response(message).set_session("RUNNING")
 
     @app.route('/api/', methods=['POST'])
     def test_page():
@@ -38,7 +34,7 @@ def create_app(config_name):
         message = """Hey, I'm Otto Investment bot, I' here to inform you about your investments. Do you want me to tell you a report on your portfolio? Or maybe information about specific stock? """
         reprompt_message = "Go on, tell me what can I do for you."
 
-        return ResponseBuilder.create_response(message)\
+        return ResponseBuilder.create_response(message) \
             .with_reprompt(message=reprompt_message)
 
     return app

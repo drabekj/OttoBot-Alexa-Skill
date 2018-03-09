@@ -85,15 +85,17 @@ class AlexaResponse(Response):
         return AlexaResponse(new_obj)
 
     def with_reprompt(self, message, is_ssml=None):
-        new_obj = json.loads(self.data.decode())
-        new_obj['response']['reprompt'] = ResponseBuilder.create_speech(message, is_ssml)
-        return AlexaResponse(new_obj)
+        data_json = json.loads(self.data.decode())
+        data_json['response']['reprompt'] = ResponseBuilder.create_speech(message, is_ssml)
+        return AlexaResponse(data_json)
 
     def set_session(self, session_attr):
-        self.data['sessionAttributes'] = session_attr
+        data_json = json.loads(self.data.decode())
+        data_json['sessionAttributes'] = session_attr
+        return AlexaResponse(data_json)
 
     def to_json(self):
-        return dict(self.data)
+        return json.loads(self.data.decode())
 
 
 class ResponseBuilder(object):

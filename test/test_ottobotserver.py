@@ -22,6 +22,14 @@ class OttoBotServerTestCase(unittest.TestCase):
             # create all tables
             db.create_all()
 
+    def test_test_page(self):
+        """Test API answers test GET request.
+            Usually used to check if server is running.
+        """
+        res = self.client().get('/')
+        self.assertEqual(res.status_code, 200)
+        self.assertIn('RUNNING', str(res.data))
+
     def test_launch_request(self):
         """Test API answers launch request with welcome response."""
         request = test_request()
