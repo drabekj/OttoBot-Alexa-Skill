@@ -1,12 +1,9 @@
-from flask import Flask
+import os
 
-app = Flask(__name__)
+from app import create_app
 
-
-@app.route('/')
-def hello_world():
-    return 'Hello World from OttoBot - Flask!!!'
-
+config_name = os.getenv('APP_SETTINGS')  # config_name = "development"
+app = create_app(config_name)
 
 if __name__ == '__main__':
     app.run()
