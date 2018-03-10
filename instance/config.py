@@ -17,7 +17,7 @@ class DevelopmentConfig(Config):
 class TestingConfig(Config):
     """Configurations for Testing, with a separate test database."""
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = 'postgresql://localhost/test_db'
+    SQLALCHEMY_DATABASE_URI = 'mysql://drabekj:tajneheslo@localhost/ottobot_db_test'
     DEBUG = True
 
 

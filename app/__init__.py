@@ -1,14 +1,14 @@
 from flask_api import FlaskAPI
 from flask_sqlalchemy import SQLAlchemy
 
+# initialize sql-alchemy
+db = SQLAlchemy()
+
 # local import
 from alexaresponse import ResponseBuilder, alexa_request, AlexaRequest
 from app.handle_intent import handle_intent
 from app.handle_launch import handle_launch
 from instance.config import app_config
-
-# initialize sql-alchemy
-db = SQLAlchemy()
 
 
 def create_app(config_name):
