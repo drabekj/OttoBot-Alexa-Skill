@@ -1,7 +1,9 @@
 import unittest
 
+from flask import json
+
 from app import create_app, db
-from test.sample_requests import test_request
+from test.sample_requests import launch_request, test_request
 
 
 class OttoBotServerTestCase(unittest.TestCase):
@@ -28,8 +30,8 @@ class OttoBotServerTestCase(unittest.TestCase):
 
     def test_launch_request(self):
         """Test API answers launch request with welcome response."""
-        request = test_request()
-        res = self.client().post('/api/', data=request)
+        request = json.dumps(test_request())
+        res = self.client().post('/api/', data=request, content_type='application/json')
         self.assertEqual(res.status_code, 200)
         self.assertIn('response', str(res.data))
 

@@ -1,8 +1,9 @@
+from flask import request
 from flask_api import FlaskAPI
 from flask_sqlalchemy import SQLAlchemy
 
 # local import
-from alexaresponse import ResponseBuilder
+from alexaresponse import ResponseBuilder, alexa_request
 from instance.config import app_config
 
 # initialize sql-alchemy
@@ -28,7 +29,8 @@ def create_app(config_name):
         return ResponseBuilder.create_response(message).set_session("RUNNING")
 
     @app.route('/api/', methods=['POST'])
-    def test_page():
+    @alexa_request
+    def test_page(request):
         # TODO routing of requests
         message = """Hey, I'm Otto Investment bot, I' here to inform you about your investments. Do you want me to tell you a report on your portfolio? Or maybe information about specific stock? """
         reprompt_message = "Go on, tell me what can I do for you."

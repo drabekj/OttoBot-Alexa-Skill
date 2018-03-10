@@ -1,6 +1,7 @@
 import json
+from functools import wraps
 
-from flask import Response
+from flask import Response, request, redirect
 
 RAW_RESPONSE = """
 {
@@ -15,7 +16,18 @@ RAW_RESPONSE = """
 }"""
 
 
-class Request(object):
+def alexa_request(func):
+    """
+    Convert the incoming request into Request type.
+    """
+    def alexafy_request():
+        req_obj = AlexaRequest(request.data)
+        return func(req_obj)
+
+    return alexafy_request
+
+
+class AlexaRequest(object):
     """
     Simple wrapper around the JSON request
     received by the module
@@ -32,7 +44,7 @@ class Request(object):
         return self.request["request"]["type"]
 
     def intent_name(self):
-        if "intent" not in self.request["request"]:
+        if "request" not in self.request or "intent" not in self.request["request"]:
             return None
         return self.request["request"]["intent"]["name"]
 
@@ -207,7 +219,7 @@ class VoiceHandler(ResponseBuilder):
     def route_request(self, request_json, metadata=None):
 
         ''' Route the request object to the right handler function '''
-        request = Request(request_json)
+        request = AlexaRequest(request_json)
         request.metadata = metadata
         # add reprompt handler or some such for default?
         handler_fn = self._handlers[

@@ -39,4 +39,8 @@ def launch_request():
 
 
 def test_request():
-    return {'name': 'Eat, pray and love'}
+    return {
+        'name': {
+            'Eat, pray and love': 'blabla'
+        }
+    }
