@@ -1,9 +1,13 @@
-from alexaresponse import ResponseBuilder
+from app.intent_stock_price import handle_get_stock_price_intent
 
 
 def handle_intent(request):
-    message = """Intent will be implemented shortly, be patient"""
-    reprompt_message = "What can I do for you?"
+    intent_name = request.intent_name()
+    print("i-LOG: WhatsTheStockPriceIntent")
 
-    return ResponseBuilder.create_response(message) \
-        .with_reprompt(message=reprompt_message)
+    try:
+        return {
+            'WhatsTheStockPriceIntent': handle_get_stock_price_intent(request),
+        }[intent_name]
+    except KeyError as error:
+        raise

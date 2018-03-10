@@ -4,7 +4,7 @@ from flask import json
 
 from app import create_app, db
 from static import strings
-from test.sample_requests import launch_request
+from test.sample_requests import launch_request, intent_request_get_stock_price
 
 
 class OttoBotServerTestCase(unittest.TestCase):
@@ -37,9 +37,19 @@ class OttoBotServerTestCase(unittest.TestCase):
                                  content_type='application/json')
 
         self.assertEqual(res.status_code, 200)
-        escaped_msg = strings.INTENT_LAUNCH_MSG.translate(
+        escaped_msg = strings.REQUEST_LAUNCH_MSG.translate(
             str.maketrans({"'": r"\'"}))
         self.assertIn(escaped_msg, str(res.data))
+
+    def test_intent_request_stock_price(self):
+        """Test API answers intent request get stock price."""
+        request = json.dumps(intent_request_get_stock_price())
+        res = self.client().post('/api/',
+                                 data=request,
+                                 content_type='application/json')
+
+        self.assertEqual(res.status_code, 200)
+        self.assertIn("The price of", str(res.data))
 
     def tearDown(self):
         """teardown all initialized variables."""
