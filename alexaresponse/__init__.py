@@ -1,7 +1,6 @@
 import json
-from functools import wraps
 
-from flask import Response, request, redirect
+from flask import Response, request
 
 RAW_RESPONSE = """
 {

@@ -3,11 +3,12 @@ import unittest
 from flask import json
 
 from app import create_app, db
-from test.sample_requests import launch_request, test_request
+from static import strings
+from test.sample_requests import launch_request
 
 
 class OttoBotServerTestCase(unittest.TestCase):
-    """This class represents the bucketlist test case"""
+    """This class represents the OttoBot routing test case"""
 
     def setUp(self):
         """Define test variables and initialize app."""
@@ -30,10 +31,15 @@ class OttoBotServerTestCase(unittest.TestCase):
 
     def test_launch_request(self):
         """Test API answers launch request with welcome response."""
-        request = json.dumps(test_request())
-        res = self.client().post('/api/', data=request, content_type='application/json')
+        request = json.dumps(launch_request())
+        res = self.client().post('/api/',
+                                 data=request,
+                                 content_type='application/json')
+
         self.assertEqual(res.status_code, 200)
-        self.assertIn('response', str(res.data))
+        escaped_msg = strings.INTENT_LAUNCH_MSG.translate(
+            str.maketrans({"'": r"\'"}))
+        self.assertIn(escaped_msg, str(res.data))
 
     def tearDown(self):
         """teardown all initialized variables."""

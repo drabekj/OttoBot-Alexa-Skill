@@ -1,9 +1,10 @@
-from flask import request
 from flask_api import FlaskAPI
 from flask_sqlalchemy import SQLAlchemy
 
 # local import
-from alexaresponse import ResponseBuilder, alexa_request
+from alexaresponse import ResponseBuilder, alexa_request, AlexaRequest
+from app.handle_intent import handle_intent
+from app.handle_launch import handle_launch
 from instance.config import app_config
 
 # initialize sql-alchemy
@@ -31,11 +32,13 @@ def create_app(config_name):
     @app.route('/api/', methods=['POST'])
     @alexa_request
     def test_page(request):
-        # TODO routing of requests
-        message = """Hey, I'm Otto Investment bot, I' here to inform you about your investments. Do you want me to tell you a report on your portfolio? Or maybe information about specific stock? """
-        reprompt_message = "Go on, tell me what can I do for you."
-
-        return ResponseBuilder.create_response(message) \
-            .with_reprompt(message=reprompt_message)
+        """:type request: AlexaRequest"""
+        if request.request_type() == "LaunchRequest":
+            return handle_launch(request)
+        elif request.request_type() == "IntentRequest":
+            return handle_intent(request)
+        elif request.request_type() == "SessionEndedRequest":
+            # TODO SessionEndedRequest
+            pass
 
     return app
