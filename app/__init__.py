@@ -31,8 +31,11 @@ def create_app(config_name):
 
     @app.route('/api/', methods=['POST'])
     @alexa_request
-    def test_page(request):
-        """:type request: AlexaRequest"""
+    def handle_request(request):
+        """
+        Route POST request by request type.
+        :type request: AlexaRequest
+        """
         if request.request_type() == "LaunchRequest":
             return handle_launch(request)
         elif request.request_type() == "IntentRequest":
