@@ -1,11 +1,7 @@
 import unittest
-import os
-import json
-
-from flask import make_response
 
 from app import create_app, db
-from test.sample_requests import launch_request, test_request
+from test.sample_requests import test_request
 
 
 class OttoBotServerTestCase(unittest.TestCase):

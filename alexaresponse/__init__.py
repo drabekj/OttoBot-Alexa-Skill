@@ -1,6 +1,6 @@
 import json
 
-from flask import Response, jsonify
+from flask import Response
 
 RAW_RESPONSE = """
 {
@@ -20,6 +20,7 @@ class Request(object):
     Simple wrapper around the JSON request
     received by the module
     """
+
     def __init__(self, request_dict, metadata=None):
         self.request = request_dict
         self.metadata = metadata or {}
@@ -54,7 +55,8 @@ class Request(object):
 
     def get_slot_value(self, slot_name):
         try:
-            return self.request["request"]["intent"]["slots"][slot_name]["value"]
+            return self.request["request"]["intent"]["slots"][slot_name][
+                "value"]
         except:
             """Value not found"""
             return None
@@ -80,13 +82,16 @@ class AlexaResponse(Response):
 
     def with_card(self, title, content=None, subtitle=None, card_type='Simple'):
         new_obj = json.loads(self.data.decode())
-        new_obj['response']['card'] = ResponseBuilder.create_card(title, content,
-                                                                        subtitle, card_type)
+        new_obj['response']['card'] = ResponseBuilder.create_card(title,
+                                                                  content,
+                                                                  subtitle,
+                                                                  card_type)
         return AlexaResponse(new_obj)
 
     def with_reprompt(self, message, is_ssml=None):
         data_json = json.loads(self.data.decode())
-        data_json['response']['reprompt'] = ResponseBuilder.create_speech(message, is_ssml)
+        data_json['response']['reprompt'] = ResponseBuilder.create_speech(
+            message, is_ssml)
         return AlexaResponse(data_json)
 
     def set_session(self, session_attr):
@@ -119,7 +124,8 @@ class ResponseBuilder(object):
         if card_obj:
             response['response']['card'] = card_obj
         if reprompt_message:
-            response['response']['reprompt'] = self.create_speech(reprompt_message, is_ssml)
+            response['response']['reprompt'] = self.create_speech(
+                reprompt_message, is_ssml)
         return AlexaResponse(response)
 
     @classmethod
@@ -137,7 +143,8 @@ class ResponseBuilder(object):
         return {"outputSpeech": data}
 
     @classmethod
-    def create_card(self, title=None, subtitle=None, content=None, card_type="Simple"):
+    def create_card(self, title=None, subtitle=None, content=None,
+                    card_type="Simple"):
         """
         card_obj = JSON card object to substitute the 'card' field in the raw_response
         format:
@@ -169,7 +176,7 @@ class VoiceHandler(ResponseBuilder):
         # ...   return alexa.create_response('hello world')
         # >>> alexa.route_request(request)
         """
-        self._handlers = { "IntentRequest" : {} }
+        self._handlers = {"IntentRequest": {}}
         self._default = '_default_'
 
     def default(self, func):
@@ -203,13 +210,16 @@ class VoiceHandler(ResponseBuilder):
         request = Request(request_json)
         request.metadata = metadata
         # add reprompt handler or some such for default?
-        handler_fn = self._handlers[self._default] # Set default handling for noisy requests
+        handler_fn = self._handlers[
+            self._default]  # Set default handling for noisy requests
 
-        if not request.is_intent() and (request.request_type() in self._handlers):
+        if not request.is_intent() and (
+                request.request_type() in self._handlers):
             '''  Route request to a non intent handler '''
             handler_fn = self._handlers[request.request_type()]
 
-        elif request.is_intent() and request.intent_name() in self._handlers['IntentRequest']:
+        elif request.is_intent() and request.intent_name() in self._handlers[
+            'IntentRequest']:
             ''' Route to right intent handler '''
             handler_fn = self._handlers['IntentRequest'][request.intent_name()]
 

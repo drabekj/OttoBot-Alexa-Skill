@@ -1,4 +1,3 @@
-from flask import make_response
 from flask_api import FlaskAPI
 from flask_sqlalchemy import SQLAlchemy
 
@@ -24,7 +23,7 @@ def create_app(config_name):
 
     @app.route('/', methods=['GET'])
     def test():
-        # TODO routing of requests
+        # TODO makes POST requests freeze (restart server needed)
         message = "OttoBot server is running."
         return ResponseBuilder.create_response(message).set_session("RUNNING")
 
