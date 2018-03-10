@@ -23,6 +23,8 @@ def create_app(config_name):
     # Connected app to the DB
     db.init_app(app)
 
+    print("Config: " + config_name)
+
     @app.route('/', methods=['GET'])
     def test():
         # TODO makes POST requests freeze (restart server needed)

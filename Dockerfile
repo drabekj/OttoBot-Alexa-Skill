@@ -19,5 +19,6 @@ EXPOSE 3333
 
 # Application configuration
 ENV APP_SETTINGS="production"
+ENV DATABASE_URL="mysql://username:password@host/db_name"
 
 CMD python3 run.py

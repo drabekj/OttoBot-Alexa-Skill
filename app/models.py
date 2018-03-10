@@ -4,11 +4,11 @@ from app import db
 class Stock(db.Model):
     """This class represents the stock table."""
 
-    __tablename__ = 'stocks'
+    __tablename__ = 'Stock'
 
-    id = db.Column(db.Integer, primary_key=True)
+    # id = db.Column(db.Integer, primary_key=True)
+    Ticker = db.Column(db.String(255), primary_key=True)
     Date = db.Column(db.DateTime, default=db.func.current_timestamp())
-    Ticker = db.Column(db.String(255))
     Open = db.Column(db.Float())
     High = db.Column(db.Float())
     Low = db.Column(db.Float())
@@ -19,10 +19,10 @@ class Stock(db.Model):
     AdjOpen = db.Column(db.Float())
 
 
-    def __init__(self, date, ticker, close, open):
+    def __init__(self, ticker, date, close, open):
         """initialize with name."""
-        self.date = date
         self.ticker = ticker
+        self.date = date
         self.close = close
         self.open = open
 
