@@ -8,3 +8,6 @@ __pycache__/
 
 # Project files
 .env
+
+# because of security
+Dockerfile
