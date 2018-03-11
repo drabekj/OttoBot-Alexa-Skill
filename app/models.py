@@ -18,13 +18,23 @@ class Stock(db.Model):
     SplitRatio = db.Column(db.Float())
     AdjOpen = db.Column(db.Float())
 
-
-    def __init__(self, ticker, date, close, open):
+    def __init__(self, Ticker, Date, Open=0, High=0, Low=0, Close=0, Volume=0,
+                 ExDividend=0, SplitRatio=0, AdjOpen=0):
         """initialize with name."""
-        self.ticker = ticker
-        self.date = date
-        self.close = close
-        self.open = open
+        self.Ticker = Ticker
+        self.Date = Date
+        self.Open = Open
+        self.High = High
+        self.Low = Low
+        self.Close = Close
+        self.Volume = Volume
+        self.ExDividend = ExDividend
+        self.SplitRatio = SplitRatio
+        self.AdjOpen = AdjOpen
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
 
     @staticmethod
     def get_last(ticker):

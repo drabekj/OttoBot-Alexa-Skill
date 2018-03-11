@@ -1,8 +1,10 @@
 import unittest
 
+from datetime import date
 from flask import json
 
 from app import create_app, db
+from app.models import Stock
 from static import strings
 from test.sample_requests import launch_request, intent_request_get_stock_price
 
@@ -14,12 +16,13 @@ class OttoBotServerTestCase(unittest.TestCase):
         """Define test variables and initialize app."""
         self.app = create_app(config_name="testing")
         self.client = self.app.test_client
-        self.bucketlist = {'name': 'Go to Borabora for vacation'}
 
         # binds the app to the current context
         with self.app.app_context():
             # create all tables
             db.create_all()
+            # prepare data
+            Stock("TSLA", date(2018, 1, 1), Close=333.33).save()
 
     def test_test_page(self):
         """Test API answers test GET request.

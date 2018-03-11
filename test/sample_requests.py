@@ -62,7 +62,7 @@ def intent_request_get_stock_price():
                 "slots": {
                     "stockTicker": {
                         "name": "stockTicker",
-                        "value": "nvda"
+                        "value": "tsla"
                     }
                 }
             },
