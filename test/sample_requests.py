@@ -1,3 +1,21 @@
+from datetime import date
+
+from static.strings import INTENT_STOCK_PRICE_MSG, \
+    INTENT_WATCHLIST_REPORT_MSG_INTRO, INTENT_WATCHLIST_REPORT_MSG_BODY
+
+# Test data values
+test_stock_1_ticker = "TSLA"
+test_stock_1_date = date(2018, 1, 1)
+test_stock_1_close = 333.33
+
+test_stock_2_ticker = "IBM"
+test_stock_2_date = date(2018, 1, 1)
+test_stock_2_close = 159.22
+
+test_user_name = "Jan Drabek"
+test_user_id = "amzn1.ask.account.AE7YEGFRUCUT2J24CYPQUWILRXKBRID4L7ZDK2GRZD6DOHYLKE4X6TFZMNYHYSVOU546M7OS6PQWYX6APXGBKIF4WMRB4YACKZZMB63XNAKOQ35VS7SUPME33JJ7V3EJDZLDARVNRUTVOGMSIDWJHKRYSXT2XDUYVPRD6URE3OOGSFM4MWSFMOPTELRTGBB6E6PKWRCBI3PGDGY"
+
+
 def launch_request():
     return {
         'session': {
@@ -89,6 +107,10 @@ def intent_request_get_stock_price():
     }
 
 
+RESPONSE_intent_request_get_stock_price = INTENT_STOCK_PRICE_MSG\
+    .format(test_stock_1_ticker, test_stock_1_close)
+
+
 def intent_report_watchlist():
     return {
         "session": {
@@ -133,3 +155,8 @@ def intent_report_watchlist():
         },
         "version": "1.0"
     }
+
+
+RESPONSE_intent_report_watchlist = INTENT_WATCHLIST_REPORT_MSG_INTRO\
+                                   + INTENT_WATCHLIST_REPORT_MSG_BODY.format(test_stock_1_ticker, test_stock_1_close)\
+                                   + INTENT_WATCHLIST_REPORT_MSG_BODY.format(test_stock_2_ticker, test_stock_2_close)

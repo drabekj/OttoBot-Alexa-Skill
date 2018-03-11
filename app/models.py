@@ -1,3 +1,5 @@
+from operator import attrgetter
+
 from app import db
 
 
@@ -38,15 +40,17 @@ class Stock(db.Model):
 
     @staticmethod
     def get_last(ticker):
-        return Stock.query.filter_by(Ticker=ticker).order_by(Stock.Date.desc())\
+        stock = Stock.query.filter_by(Ticker=ticker).order_by(Stock.Date.desc()) \
             .first()
+        stock.Ticker = stock.Ticker.upper()
+        return stock
 
     def delete(self):
         db.session.delete(self)
         db.session.commit()
 
     def __repr__(self):
-        return "<Stock: {} {} {}>".format(self.date, self.ticker, self.close)
+        return "<Stock: {} {} {}>".format(self.Date, self.Ticker, self.Close)
 
 
 class User(db.Model):
@@ -89,7 +93,15 @@ class Watchlist(db.Model):
 
     @staticmethod
     def get_users_tickers(user_id):
-        return Watchlist.query.filter_by(user_id=user_id).all()
+        """
+        :return: List[str] of tickers for given user in his watchlist
+        """
+
+        results = Watchlist.query.filter_by(user_id=user_id).all()
+        """:type results list[Watchlist]"""
+        ticker_list = [item.stock_ticker for item in results]
+
+        return ticker_list
 
     def __repr__(self):
         return "<Watchlist item: {} {}>".format(self.user_id, self.stock_ticker)

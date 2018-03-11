@@ -1,19 +1,15 @@
 import unittest
 
-from datetime import date
 from flask import json
 
 from app import create_app, db
 from app.models import Stock, User, Watchlist
 from static import strings
-from test.sample_requests import launch_request,\
-    intent_request_get_stock_price, intent_report_watchlist
+from test.sample_requests import *
 
 
 class OttoBotServerTestCase(unittest.TestCase):
     """This class represents the OttoBot routing test case"""
-
-    test_user_id = "amzn1.ask.account.AE7YEGFRUCUT2J24CYPQUWILRXKBRID4L7ZDK2GRZD6DOHYLKE4X6TFZMNYHYSVOU546M7OS6PQWYX6APXGBKIF4WMRB4YACKZZMB63XNAKOQ35VS7SUPME33JJ7V3EJDZLDARVNRUTVOGMSIDWJHKRYSXT2XDUYVPRD6URE3OOGSFM4MWSFMOPTELRTGBB6E6PKWRCBI3PGDGY"
 
     def setUp(self):
         """Define test variables and initialize app."""
@@ -26,11 +22,11 @@ class OttoBotServerTestCase(unittest.TestCase):
             db.create_all()
 
             # Insert testing data
-            Stock("TSLA", date(2018, 1, 1), Close=333.33).save()
-            Stock("IBM", date(2018, 1, 1), Close=159.22).save()
-            User(self.test_user_id, "Jan Drabek").save()
-            Watchlist("TSLA", self.test_user_id).save()
-            Watchlist("IBM", self.test_user_id).save()
+            Stock(test_stock_1_ticker, test_stock_1_date, Close=test_stock_1_close).save()
+            Stock(test_stock_2_ticker, test_stock_2_date, Close=test_stock_2_close).save()
+            User(test_user_id, test_user_name).save()
+            Watchlist(test_stock_1_ticker, test_user_id).save()
+            Watchlist(test_stock_2_ticker, test_user_id).save()
 
     def test_test_page(self):
         """Test API answers test GET request.
@@ -49,8 +45,7 @@ class OttoBotServerTestCase(unittest.TestCase):
         request = json.dumps(launch_request())
 
         # Execute
-        res = self.client().post('/api/',
-                                 data=request,
+        res = self.client().post('/api/', data=request,
                                  content_type='application/json')
 
         # Assert
@@ -65,13 +60,12 @@ class OttoBotServerTestCase(unittest.TestCase):
         request = json.dumps(intent_request_get_stock_price())
 
         # Execute
-        res = self.client().post('/api/',
-                                 data=request,
+        res = self.client().post('/api/', data=request,
                                  content_type='application/json')
 
         # Assert
         self.assertEqual(res.status_code, 200)
-        self.assertIn("The price of", str(res.data))
+        self.assertIn(RESPONSE_intent_request_get_stock_price, str(res.data))
 
     def test_intent_report_watchlist(self):
         """Test API answers intent request report watchlist."""
@@ -79,13 +73,12 @@ class OttoBotServerTestCase(unittest.TestCase):
         request = json.dumps(intent_report_watchlist())
 
         # Execute
-        res = self.client().post('/api/',
-                                 data=request,
+        res = self.client().post('/api/', data=request,
                                  content_type='application/json')
 
         # Assert
         self.assertEqual(res.status_code, 200)
-        self.assertIn(strings.INTENT_WATCHLIST_REPORT_MSG, str(res.data))
+        self.assertIn(RESPONSE_intent_report_watchlist, str(res.data))
 
     def tearDown(self):
         """teardown all initialized variables."""
