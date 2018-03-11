@@ -85,7 +85,7 @@ class AlexaRequest(object):
 
 class AlexaResponse(Response):
     def __init__(self, data):
-        super().__init__(mimetype="application/json")
+        super().__init__(mimetype="application/json;charset=UTF-8")
         self.data = json.dumps(data)
 
     def __repr__(self):
