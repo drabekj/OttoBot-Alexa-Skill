@@ -10,7 +10,7 @@ def handle_report_stock_watchlist(request):
     # Query DB for watchlist data
     ticker_list = Watchlist.get_users_tickers(user_id)
     stocks = _get_stocks(ticker_list)
-    # """:type stocks list[Watchlist]"""
+    """:type stocks list[Watchlist]"""
 
     # Prepare response
     if not stocks:
@@ -20,7 +20,7 @@ def handle_report_stock_watchlist(request):
 
     reprompt_message = strings.INTENT_GENERAL_REPROMPT
 
-    return ResponseBuilder.create_response(message)\
+    return ResponseBuilder.create_response(message) \
         .with_reprompt(reprompt_message)
 
 
