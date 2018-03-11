@@ -11,7 +11,7 @@ class Config(object):
 
 class DevelopmentConfig(Config):
     """Configurations for Development."""
-    SQLALCHEMY_DATABASE_URI = 'mysql://drabekj:tajneheslo@localhost/ottobot_db_test'
+    SQLALCHEMY_DATABASE_URI = 'mysql://drabekj:tajneheslo@localhost/ottobot_db_dev'
     DEBUG = True
 
 
