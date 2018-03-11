@@ -6,12 +6,9 @@ def handle_intent(request):
     intent_name = request.intent_name()
     print("LOG-i: WhatsTheStockPriceIntent")
 
-    try:
-        return {
-            'WhatsTheStockPriceIntent':
-                intent_stock.handle_get_stock_price_intent(request),
-            'ReportStockWatchlistIntent':
-                intent_watchlist.handle_report_stock_watchlist(request),
-        }[intent_name]
-    except KeyError as error:
-        raise
+    if intent_name == 'WhatsTheStockPriceIntent':
+        return intent_stock.handle_get_stock_price_intent(request)
+    elif intent_name == 'ReportStockWatchlistIntent':
+        return intent_watchlist.handle_report_stock_watchlist(request)
+    else:
+        raise KeyError('Cant handle this type of intent: ' + intent_name)
