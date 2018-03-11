@@ -42,7 +42,6 @@ class Stock(db.Model):
     def get_last(ticker):
         stock = Stock.query.filter_by(Ticker=ticker).order_by(Stock.Date.desc()) \
             .first()
-        stock.Ticker = stock.Ticker.upper()
         return stock
 
     def delete(self):
