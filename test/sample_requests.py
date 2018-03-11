@@ -1,7 +1,6 @@
 from datetime import date
 
-from static.strings import INTENT_STOCK_PRICE_MSG, \
-    INTENT_WATCHLIST_REPORT_MSG_INTRO, INTENT_WATCHLIST_REPORT_MSG_BODY
+from static.strings import *
 
 # Test data values
 test_stock_1_ticker = "TSLA"
@@ -160,3 +159,5 @@ def intent_report_watchlist():
 RESPONSE_intent_report_watchlist = INTENT_WATCHLIST_REPORT_MSG_INTRO\
                                    + INTENT_WATCHLIST_REPORT_MSG_BODY.format(test_stock_1_ticker, test_stock_1_close)\
                                    + INTENT_WATCHLIST_REPORT_MSG_BODY.format(test_stock_2_ticker, test_stock_2_close)
+
+RESPONSE_intent_report_empty_watchlist = INTENT_WATCHLIST_EMPTY_MSG

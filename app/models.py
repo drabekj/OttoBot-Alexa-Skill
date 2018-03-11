@@ -103,5 +103,10 @@ class Watchlist(db.Model):
 
         return ticker_list
 
+    @staticmethod
+    def delete_all():
+        Watchlist.query.delete()
+        db.session.commit()
+
     def __repr__(self):
         return "<Watchlist item: {} {}>".format(self.user_id, self.stock_ticker)
