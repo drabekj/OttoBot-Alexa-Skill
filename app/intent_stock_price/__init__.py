@@ -19,5 +19,5 @@ def handle_get_stock_price_intent(request):
         message = strings.INTENT_STOCK_PRICE_MSG.format(stock.Ticker, stock.Close)
     reprompt_message = strings.INTENT_GENERAL_REPROMPT
 
-    return ResponseBuilder.create_response(message)\
+    return ResponseBuilder.create_response(message) \
         .with_reprompt(reprompt_message)

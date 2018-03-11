@@ -1,5 +1,3 @@
-from operator import attrgetter
-
 from app import db
 
 
@@ -8,7 +6,6 @@ class Stock(db.Model):
 
     __tablename__ = 'Stock'
 
-    # id = db.Column(db.Integer, primary_key=True)
     Ticker = db.Column(db.String(255), primary_key=True)
     Date = db.Column(db.DateTime, default=db.func.current_timestamp())
     Open = db.Column(db.Float())
@@ -40,9 +37,8 @@ class Stock(db.Model):
 
     @staticmethod
     def get_last(ticker):
-        stock = Stock.query.filter_by(Ticker=ticker).order_by(Stock.Date.desc()) \
-            .first()
-        return stock
+        return Stock.query.filter_by(Ticker=ticker) \
+            .order_by(Stock.Date.desc()).first()
 
     def delete(self):
         db.session.delete(self)
@@ -68,6 +64,10 @@ class User(db.Model):
     def save(self):
         db.session.add(self)
         db.session.commit()
+
+    @staticmethod
+    def get_user(user_id):
+        return User.query.filter_by(userId=user_id).first()
 
     def __repr__(self):
         return "<User: {} {}>".format(self.name, self.userId)
