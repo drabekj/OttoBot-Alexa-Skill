@@ -14,9 +14,6 @@ class OttoBotServerTestCase(unittest.TestCase):
     """This class represents the OttoBot routing test case"""
 
     test_user_id = "amzn1.ask.account.AE7YEGFRUCUT2J24CYPQUWILRXKBRID4L7ZDK2GRZD6DOHYLKE4X6TFZMNYHYSVOU546M7OS6PQWYX6APXGBKIF4WMRB4YACKZZMB63XNAKOQ35VS7SUPME33JJ7V3EJDZLDARVNRUTVOGMSIDWJHKRYSXT2XDUYVPRD6URE3OOGSFM4MWSFMOPTELRTGBB6E6PKWRCBI3PGDGY"
-    StockTest = Stock("TSLA", date(2018, 1, 1), Close=333.33)
-    UserTest = User(test_user_id, "Jan Drabek")
-    WatchlistTest = Watchlist("TSLA", test_user_id)
 
     def setUp(self):
         """Define test variables and initialize app."""
@@ -27,6 +24,13 @@ class OttoBotServerTestCase(unittest.TestCase):
         with self.app.app_context():
             # create all tables
             db.create_all()
+
+            # Insert testing data
+            Stock("TSLA", date(2018, 1, 1), Close=333.33).save()
+            Stock("IBM", date(2018, 1, 1), Close=159.22).save()
+            User(self.test_user_id, "Jan Drabek").save()
+            Watchlist("TSLA", self.test_user_id).save()
+            Watchlist("IBM", self.test_user_id).save()
 
     def test_test_page(self):
         """Test API answers test GET request.
@@ -58,8 +62,6 @@ class OttoBotServerTestCase(unittest.TestCase):
     def test_intent_request_stock_price(self):
         """Test API answers intent request get stock price."""
         # Setup
-        with self.app.app_context():  # prepare DB entry
-            self.StockTest.save()
         request = json.dumps(intent_request_get_stock_price())
 
         # Execute
@@ -74,9 +76,6 @@ class OttoBotServerTestCase(unittest.TestCase):
     def test_intent_report_watchlist(self):
         """Test API answers intent request report watchlist."""
         # Setup
-        with self.app.app_context():  # prepare DB entry
-            self.UserTest.save()
-            self.WatchlistTest.save()
         request = json.dumps(intent_report_watchlist())
 
         # Execute

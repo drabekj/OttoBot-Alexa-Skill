@@ -87,5 +87,9 @@ class Watchlist(db.Model):
         db.session.add(self)
         db.session.commit()
 
+    @staticmethod
+    def get_users_tickers(user_id):
+        return Watchlist.query.filter_by(user_id=user_id).all()
+
     def __repr__(self):
         return "<Watchlist item: {} {}>".format(self.user_id, self.stock_ticker)
