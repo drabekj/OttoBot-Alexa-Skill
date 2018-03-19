@@ -53,12 +53,12 @@ class User(db.Model):
 
     __tablename__ = 'users'
 
-    accessToken = db.Column(db.String(255), nullable=False, primary_key=True)
+    userId = db.Column(db.String(255), nullable=False, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
     watchlist = db.relationship('Watchlist', backref='watchlist', lazy='dynamic')
 
-    def __init__(self, access_token, name):
-        self.accessToken = access_token
+    def __init__(self, user_id, name):
+        self.userId = user_id
         self.name = name
 
     def save(self):
@@ -66,11 +66,11 @@ class User(db.Model):
         db.session.commit()
 
     @staticmethod
-    def get_user(access_token):
-        return User.query.filter_by(accessToken=access_token).first()
+    def get_user(user_id):
+        return User.query.filter_by(userId=user_id).first()
 
     def __repr__(self):
-        return "<User: {} {}>".format(self.name, self.accessToken)
+        return "<User: {} {}>".format(self.name, self.userId)
 
 
 class Watchlist(db.Model):
@@ -80,23 +80,23 @@ class Watchlist(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     stock_ticker = db.Column(db.String(255))
-    accessToken = db.Column(db.String(255), db.ForeignKey('users.accessToken'))
+    userId = db.Column(db.String(255), db.ForeignKey('users.userId'))
 
-    def __init__(self, stock_ticker, access_token):
+    def __init__(self, stock_ticker, user_id):
         self.stock_ticker = stock_ticker
-        self.accessToken = access_token
+        self.userId = user_id
 
     def save(self):
         db.session.add(self)
         db.session.commit()
 
     @staticmethod
-    def get_users_tickers(access_token):
+    def get_users_tickers(user_id):
         """
         :return: List[str] of tickers for given user in his watchlist
         """
 
-        results = Watchlist.query.filter_by(accessToken=access_token).all()
+        results = Watchlist.query.filter_by(userId=user_id).all()
         """:type results list[Watchlist]"""
         ticker_list = [item.stock_ticker for item in results]
 
@@ -108,4 +108,4 @@ class Watchlist(db.Model):
         db.session.commit()
 
     def __repr__(self):
-        return "<Watchlist item: {} {}>".format(self.accessToken, self.stock_ticker)
+        return "<Watchlist item: {} {}>".format(self.userId, self.stock_ticker)
