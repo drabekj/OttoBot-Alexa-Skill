@@ -9,3 +9,7 @@ INTENT_WATCHLIST_REPORT_MSG_BODY = " stock {} is valued at ${}"
 INTENT_WATCHLIST_EMPTY_MSG = "Your watchlist is empty. "
 
 INTENT_GENERAL_REPROMPT = "Is there something else I can help you with?"
+
+# Error states
+ERROR_NOT_AUTHENTICATED = "First you need to authenticate in the Alexa App."
+ERROR_NOT_AUTHENTICATED_REPROMPT = "Please go to the Alexa App and link your Facebook account to use this feature."

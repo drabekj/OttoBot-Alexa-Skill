@@ -106,7 +106,7 @@ def intent_request_get_stock_price():
     }
 
 
-RESPONSE_intent_request_get_stock_price = INTENT_STOCK_PRICE_MSG\
+RESPONSE_intent_request_get_stock_price = INTENT_STOCK_PRICE_MSG \
     .format(test_stock_1_ticker, test_stock_1_close)
 
 
@@ -157,8 +157,56 @@ def intent_report_watchlist():
     }
 
 
-RESPONSE_intent_report_watchlist = INTENT_WATCHLIST_REPORT_MSG_INTRO\
-                                   + INTENT_WATCHLIST_REPORT_MSG_BODY.format(test_stock_1_ticker, test_stock_1_close)\
-                                   + INTENT_WATCHLIST_REPORT_MSG_BODY.format(test_stock_2_ticker, test_stock_2_close)
+RESPONSE_intent_report_watchlist = INTENT_WATCHLIST_REPORT_MSG_INTRO \
+                                   + INTENT_WATCHLIST_REPORT_MSG_BODY.format(
+    test_stock_1_ticker, test_stock_1_close) \
+                                   + INTENT_WATCHLIST_REPORT_MSG_BODY.format(
+    test_stock_2_ticker, test_stock_2_close)
 
 RESPONSE_intent_report_empty_watchlist = INTENT_WATCHLIST_EMPTY_MSG
+
+
+def intent_report_watchlist_not_authenticated():
+    return {
+        "session": {
+            "new": False,
+            "sessionId": "SessionId.3bff8921-b907-4dc7-964e-04a67fc2c1e3",
+            "application": {
+                "applicationId": "amzn1.ask.skill.dba1346e-5f4a-4f9e-9d14-dc61dd084f96"
+            },
+            "attributes": {
+                "userName": "John",
+                "stockTicker": "IBM"
+            },
+            "user": {
+                "userId": "amzn1.ask.account.AE7YEGFRUCUT2J24CYPQUWILRXKBRID4L7ZDK2GRZD6DOHYLKE4X6TFZMNYHYSVOU546M7OS6PQWYX6APXGBKIF4WMRB4YACKZZMB63XNAKOQ35VS7SUPME33JJ7V3EJDZLDARVNRUTVOGMSIDWJHKRYSXT2XDUYVPRD6URE3OOGSFM4MWSFMOPTELRTGBB6E6PKWRCBI3PGDGY"
+            }
+        },
+        "request": {
+            "type": "IntentRequest",
+            "requestId": "EdwRequestId.14d6a81a-28b1-4e19-9505-ac16e540ea5e",
+            "intent": {
+                "name": "ReportStockWatchlistIntent",
+                "slots": {}
+            },
+            "locale": "en-US",
+            "timestamp": "2017-11-09T13:22:55Z"
+        },
+        "context": {
+            "AudioPlayer": {
+                "playerActivity": "IDLE"
+            },
+            "System": {
+                "application": {
+                    "applicationId": "amzn1.ask.skill.dba1346e-5f4a-4f9e-9d14-dc61dd084f96"
+                },
+                "user": {
+                    "userId": "amzn1.ask.account.AE7YEGFRUCUT2J24CYPQUWILRXKBRID4L7ZDK2GRZD6DOHYLKE4X6TFZMNYHYSVOU546M7OS6PQWYX6APXGBKIF4WMRB4YACKZZMB63XNAKOQ35VS7SUPME33JJ7V3EJDZLDARVNRUTVOGMSIDWJHKRYSXT2XDUYVPRD6URE3OOGSFM4MWSFMOPTELRTGBB6E6PKWRCBI3PGDGY"
+                },
+                "device": {
+                    "supportedInterfaces": {}
+                }
+            }
+        },
+        "version": "1.0"
+    }
