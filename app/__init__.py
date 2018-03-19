@@ -2,6 +2,7 @@ from flask_api import FlaskAPI
 from flask_sqlalchemy import SQLAlchemy
 
 # initialize sql-alchemy
+from app.utils.MyError import UnknownRequestError
 from app.utils.alexa.request import alexa_request
 from app.utils.alexa.response import ResponseBuilder
 
@@ -45,8 +46,12 @@ def create_app(config_name):
             return handle_launch(request)
         elif request.request_type() == "IntentRequest":
             return handle_intent(request)
+        elif request.request_type() == "Dialog.Delegate":
+            return handle_intent(request)
         elif request.request_type() == "SessionEndedRequest":
             # TODO SessionEndedRequest
             pass
+        else:
+            raise UnknownRequestError(request.request_type())
 
     return app

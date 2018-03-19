@@ -12,3 +12,25 @@ class EntryExistsError(Error):
 
     def __init__(self, message):
         self.message = message
+
+
+class UnknownRequestError(Error):
+    """Exception raised when unknown request is received.
+
+    Attributes:
+        message -- explanation of the error
+    """
+
+    def __init__(self, message):
+        self.message = message
+
+
+class UnknownIntentError(Error):
+    """Exception raised when unknown intent is received.
+
+    Attributes:
+        message -- explanation of the error
+    """
+
+    def __init__(self, message):
+        self.message = message
