@@ -2,7 +2,7 @@ import json
 
 from flask import Response, request
 
-from app import handle_error_states
+from app import handle_error_states, FacebookApi
 from app.models import User
 
 RAW_RESPONSE = """
@@ -45,7 +45,8 @@ def authenticated(func):
                 .handle_not_authenticated(alexafied_request)
 
         # add it to the Users table if not already there
-        User(access_token, "John").save()
+        user = FacebookApi.get_me(access_token)
+        User(user['id'], user['name']).save()
         return func(alexafied_request)
 
     return check_access_token
