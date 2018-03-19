@@ -24,9 +24,9 @@ class OttoBotServerTestCase(unittest.TestCase):
             # Insert testing data
             Stock(test_stock_1_ticker, test_stock_1_date, Close=test_stock_1_close).save()
             Stock(test_stock_2_ticker, test_stock_2_date, Close=test_stock_2_close).save()
-            User(test_user_access_token, test_user_name).save()
-            Watchlist(test_stock_1_ticker, test_user_access_token).save()
-            Watchlist(test_stock_2_ticker, test_user_access_token).save()
+            User(test_user_id, test_user_name).save()
+            Watchlist(test_stock_1_ticker, test_user_id).save()
+            Watchlist(test_stock_2_ticker, test_user_id).save()
 
     def test_test_page(self):
         """Test API answers test GET request.

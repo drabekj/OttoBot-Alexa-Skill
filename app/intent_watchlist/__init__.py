@@ -1,5 +1,6 @@
 from app import ResponseBuilder
 from app.models import Stock, Watchlist
+from app.utils.alexa.request import AlexaRequest
 from app.utils.authentication import authenticated
 from static import strings
 
@@ -7,10 +8,10 @@ from static import strings
 @authenticated
 def handle_report_stock_watchlist(request):
     """:type request AlexaRequest"""
-    access_token = request.access_token()
+    user_id = request.get_user_id()
 
     # Query DB for watchlist data
-    ticker_list = Watchlist.get_users_tickers(access_token)
+    ticker_list = Watchlist.get_users_tickers(user_id)
     stocks = _get_stocks(ticker_list)
     """:type stocks list[Watchlist]"""
 

@@ -11,8 +11,8 @@ test_stock_2_ticker = "IBM"
 test_stock_2_date = date(2018, 1, 1)
 test_stock_2_close = 159.22
 
+test_user_id = 2003646219648973
 test_user_name = "John"
-test_user_access_token = "EAAdvSgyprPcBAGWGAKsr03UddHlyX6JiqV9v7aAvGxfNBRNAKCAfrJ6uDD4ixxkX6TAWxZC9F6kTKS2edxg3cZBW9CZBQ1zuM8HKhPc45bIrC3OADEPGIKGm2i0o5eH3sa9p5c6QXrN1jdzYAW0vCAVBGZA1wDk3s7IrZAjVwXgZDZD"
 
 
 def launch_request():
@@ -119,8 +119,8 @@ def intent_report_watchlist():
                 "applicationId": "amzn1.ask.skill.dba1346e-5f4a-4f9e-9d14-dc61dd084f96"
             },
             "attributes": {
-                "userName": "John",
-                "stockTicker": "IBM"
+                "userName": "{}".format(test_user_name),
+                "userId": "{}".format(test_user_id)
             },
             "user": {
                 "accessToken": "EAAdvSgyprPcBAGWGAKsr03UddHlyX6JiqV9v7aAvGxfNBRNAKCAfrJ6uDD4ixxkX6TAWxZC9F6kTKS2edxg3cZBW9CZBQ1zuM8HKhPc45bIrC3OADEPGIKGm2i0o5eH3sa9p5c6QXrN1jdzYAW0vCAVBGZA1wDk3s7IrZAjVwXgZDZD",
