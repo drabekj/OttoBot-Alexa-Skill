@@ -67,3 +67,7 @@ class AlexaRequest(object):
     def get_slot_map(self):
         return {slot_name: self.get_slot_value(slot_name)
                 for slot_name in self.get_slot_names()}
+
+    def set_user(self, user):
+        self.session['userId'] = user['id']
+        self.session['userName'] = user['name']

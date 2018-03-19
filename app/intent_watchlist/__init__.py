@@ -22,7 +22,7 @@ def handle_report_stock_watchlist(request):
 
     reprompt_message = strings.INTENT_GENERAL_REPROMPT
 
-    return ResponseBuilder.create_response(message) \
+    return ResponseBuilder.create_response(request, message=message) \
         .with_reprompt(reprompt_message)
 
 

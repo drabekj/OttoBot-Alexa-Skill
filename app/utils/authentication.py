@@ -1,6 +1,7 @@
 from app import handle_error_states
 from app.models import User
 from app.utils import FacebookApi
+from app.utils.alexa.request import AlexaRequest
 
 
 def authenticated(func):
@@ -20,9 +21,21 @@ def authenticated(func):
             return handle_error_states \
                 .handle_not_authenticated(alexafied_request)
 
-        # add it to the Users table if not already there
-        user = FacebookApi.get_me(access_token)
-        User(user['id'], user['name']).save()
+        _remember_user_id(alexafied_request, access_token)
         return func(alexafied_request)
 
     return check_access_token
+
+
+def _remember_user_id(alexafied_request, access_token):
+    """ :type alexafied_request AlexaRequest"""
+    # get user id and name from Facebook
+    user = FacebookApi.get_me(access_token)
+
+    # save user to DB if not already there
+    User(user['id'], user['name']).save()
+
+    # set session variables
+    alexafied_request.set_user(user)
+
+    return alexafied_request

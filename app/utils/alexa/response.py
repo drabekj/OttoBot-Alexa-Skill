@@ -54,14 +54,18 @@ class ResponseBuilder(object):
     base_response = eval(RAW_RESPONSE)
 
     @classmethod
-    def create_response(self, message=None, end_session=False, card_obj=None,
+    def create_response(self, request=None, message=None, end_session=False, card_obj=None,
                         reprompt_message=None, is_ssml=None):
         """
+        :type request AlexaRequest
+
         message - text message to be spoken out by the Echo
         end_session - flag to determine whether this interaction should end the session
         card_obj = JSON card object to substitute the 'card' field in the raw_response
         """
         response = dict(self.base_response)
+        if request:
+            response['sessionAttributes'] = request.session
         if message:
             response['response'] = self.create_speech(message, is_ssml)
         response['response']['shouldEndSession'] = end_session

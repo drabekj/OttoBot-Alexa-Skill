@@ -1,4 +1,4 @@
-from app.utils import alexa as alexa
+from app import ResponseBuilder
 from static import strings
 
 
@@ -9,6 +9,6 @@ def handle_not_authenticated(request):
     message = strings.ERROR_NOT_AUTHENTICATED
     reprompt_message = strings.ERROR_NOT_AUTHENTICATED_REPROMPT
 
-    return alexa.ResponseBuilder.create_response(message) \
+    return ResponseBuilder.create_response(request, message=message) \
         .with_reprompt(message=reprompt_message) \
         .with_card("", card_type="LinkAccount")
