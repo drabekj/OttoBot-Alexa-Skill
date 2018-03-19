@@ -62,7 +62,7 @@ class User(db.Model):
         self.name = name
 
     def save(self):
-        db.session.add(self)
+        db.session.merge(self)
         db.session.commit()
 
     @staticmethod

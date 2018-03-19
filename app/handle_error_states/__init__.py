@@ -10,4 +10,5 @@ def handle_not_authenticated(request):
     reprompt_message = strings.ERROR_NOT_AUTHENTICATED_REPROMPT
 
     return alexa.ResponseBuilder.create_response(message) \
-        .with_reprompt(message=reprompt_message)
+        .with_reprompt(message=reprompt_message) \
+        .with_card("", card_type="LinkAccount")
