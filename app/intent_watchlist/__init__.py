@@ -4,7 +4,7 @@ from app.utils.alexa.request import AlexaRequest
 from app.utils.authentication import authenticated
 from static import strings
 
-
+# ReportStockWatchlistIntent
 @authenticated
 def handle_report_stock_watchlist(request):
     """:type request AlexaRequest"""
@@ -42,3 +42,25 @@ def _get_stocks(ticker_list):
         stocks.append(Stock.get_last(ticker))
 
     return stocks
+
+
+# AddStockToWatchlistIntent
+@authenticated
+def handle_add_to_watchlist(request):
+    """:type request AlexaRequest"""
+    user_id = request.get_user_id()
+
+    # Parse stock ticker (either slot or sessionAttribute)
+    ticker = request.get_slot_value('stockTicker')
+    if ticker is None:
+        ticker = request.session['stockTicker']
+
+    # add ticker to watchlist
+    Watchlist(ticker, user_id).save()
+
+    # Prepare response
+    message = strings.INTENT_ADDED_TO_WATCHLIST.format(ticker)
+    reprompt_message = strings.INTENT_GENERAL_REPROMPT
+
+    return ResponseBuilder.create_response(request, message=message) \
+        .with_reprompt(reprompt_message)

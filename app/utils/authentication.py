@@ -17,7 +17,7 @@ def authenticated(func):
         try:
             access_token = alexafied_request.access_token()
         except KeyError as e:
-            print("User is probably not authenticated. error: " + str(e))
+            print("User is probably not authenticated. error: " + str(e) + "missing")
             return handle_error_states \
                 .handle_not_authenticated(alexafied_request)
 
