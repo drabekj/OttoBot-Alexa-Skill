@@ -87,7 +87,7 @@ class Watchlist(db.Model):
         self.userId = user_id
 
     def save(self):
-        db.session.add(self)
+        db.session.merge(self)
         db.session.commit()
 
     @staticmethod
