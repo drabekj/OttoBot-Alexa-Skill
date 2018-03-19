@@ -108,6 +108,19 @@ class OttoBotServerTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 200)
         self.assertIn(RESPONSE_intent_report_empty_watchlist, str(res.data))
 
+    def test_intent_add_to_watchlist(self):
+        """Test API answers intent request report watchlist."""
+        # Setup
+        request = json.dumps(intent_add_to_watchlist())
+
+        # Execute
+        res = self.client().post('/api/', data=request,
+                                 content_type='application/json')
+
+        # Assert
+        self.assertEqual(res.status_code, 200)
+        self.assertIn(RESPONSE_intent_add_to_watchlist, str(res.data))
+
     def tearDown(self):
         """teardown all initialized variables."""
         with self.app.app_context():
