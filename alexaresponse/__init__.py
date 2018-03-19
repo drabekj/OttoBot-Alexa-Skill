@@ -2,6 +2,8 @@ import json
 
 from flask import Response, request
 
+from app import handle_error_states
+
 RAW_RESPONSE = """
 {
     "version": "1.0",
@@ -19,11 +21,31 @@ def alexa_request(func):
     """
     Convert the incoming request into Request type.
     """
+
     def alexafy_request():
         req_obj = AlexaRequest(request.data)
         return func(req_obj)
 
     return alexafy_request
+
+
+def authenticated(func):
+    """
+    Check if user is authenticated (has accessToken).
+    """
+
+    def check_access_token(alexafied_request):
+        """ :type alexafied_request AlexaRequest"""
+        try:
+            alexafied_request.access_token()
+        except KeyError as e:
+            print("User is probably not authenticated. error: " + str(e))
+            return handle_error_states \
+                .handle_not_authenticated(alexafied_request)
+
+        return func(alexafied_request)
+
+    return check_access_token
 
 
 class AlexaRequest(object):
@@ -43,7 +65,8 @@ class AlexaRequest(object):
         return self.request["request"]["type"]
 
     def intent_name(self):
-        if "request" not in self.request or "intent" not in self.request["request"]:
+        if "request" not in self.request or "intent" not in self.request[
+            "request"]:
             return None
         return self.request["request"]["intent"]["name"]
 
@@ -56,10 +79,7 @@ class AlexaRequest(object):
         return self.request["session"]["user"]["userId"]
 
     def access_token(self):
-        try:
-            return self.request['session']['user']['accessToken']
-        except:
-            return None
+        return self.request['session']['user']['accessToken']
 
     def session_id(self):
         return self.request["session"]["sessionId"]

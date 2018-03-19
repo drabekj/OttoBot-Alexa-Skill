@@ -1,12 +1,12 @@
-from alexaresponse import ResponseBuilder, AlexaRequest
+from alexaresponse import ResponseBuilder, AlexaRequest, authenticated
 from app.models import Stock, Watchlist, User
 from static import strings
 
 
+@authenticated
 def handle_report_stock_watchlist(request):
     """:type request AlexaRequest"""
     access_token = request.access_token()
-    name = User.get_user(access_token)
 
     # Query DB for watchlist data
     ticker_list = Watchlist.get_users_tickers(access_token)
