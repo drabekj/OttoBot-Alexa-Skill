@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 580ef290ecb7
+Revision ID: f95cb0262784
 Revises: 
-Create Date: 2018-03-11 21:48:07.300249
+Create Date: 2018-03-19 15:17:59.602076
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '580ef290ecb7'
+revision = 'f95cb0262784'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -32,15 +32,15 @@ def upgrade():
     sa.PrimaryKeyConstraint('Ticker')
     )
     op.create_table('users',
-    sa.Column('userId', sa.String(length=255), nullable=False),
+    sa.Column('accessToken', sa.String(length=255), nullable=False),
     sa.Column('name', sa.String(length=50), nullable=False),
-    sa.PrimaryKeyConstraint('userId')
+    sa.PrimaryKeyConstraint('accessToken')
     )
     op.create_table('watchlists',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('stock_ticker', sa.String(length=255), nullable=True),
-    sa.Column('user_id', sa.String(length=255), nullable=True),
-    sa.ForeignKeyConstraint(['user_id'], ['users.userId'], ),
+    sa.Column('accessToken', sa.String(length=255), nullable=True),
+    sa.ForeignKeyConstraint(['accessToken'], ['users.accessToken'], ),
     sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###
