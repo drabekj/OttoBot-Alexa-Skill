@@ -71,3 +71,9 @@ class AlexaRequest(object):
     def set_user(self, user):
         self.session['userId'] = user['id']
         self.session['userName'] = user['name']
+
+    def get_user_id(self):
+        return self.session['userId']
+
+    def get_user_name(self):
+        return self.session['userName']
