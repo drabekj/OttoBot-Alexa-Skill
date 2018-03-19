@@ -31,8 +31,8 @@ target_metadata = current_app.extensions['migrate'].db.metadata
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
 def include_object(object, name, type_, reflected, compare_to):
-    print("include_object: " + name)
     if type_ == 'table' and name in ('Stock',):
+        print("Ignore table: " + name)
         return False
 
     return True
@@ -50,7 +50,6 @@ def run_migrations_offline():
     script output.
 
     """
-    print("include_object: offline")
     url = config.get_main_option("sqlalchemy.url")
     context.configure(url=url, include_object=include_object)
 
@@ -65,7 +64,6 @@ def run_migrations_online():
     and associate a connection with the context.
 
     """
-    print("include_object: online")
     """Run migrations in 'online' mode.
 
         In this scenario we need to create an Engine
