@@ -32,7 +32,7 @@ def create_app(config_name):
         # TODO makes POST requests freeze (restart server needed)
         message = "OttoBot server is running."
         return ResponseBuilder.create_response(message=message) \
-            .set_session("RUNNING")
+            .set_session("RUNNING", "")
 
     @app.route('/api/', methods=['POST'])
     @alexa_request

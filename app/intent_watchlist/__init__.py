@@ -1,8 +1,10 @@
 from app import ResponseBuilder
 from app.models import Stock, Watchlist
+from app.utils.MyError import EntryExistsError
 from app.utils.alexa.request import AlexaRequest
 from app.utils.authentication import authenticated
 from static import strings
+
 
 # ReportStockWatchlistIntent
 @authenticated
@@ -53,14 +55,22 @@ def handle_add_to_watchlist(request):
     # Parse stock ticker (either slot or sessionAttribute)
     ticker = request.get_slot_value('stockTicker')
     if ticker is None:
-        ticker = request.session['stockTicker']
+        ticker = request.session.get('stockTicker', None)
 
-    # add ticker to watchlist
-    Watchlist(ticker, user_id).save()
+    if ticker is None:
+        message = strings.INTENT_ADDED_TO_WATCHLIST_FAIL.format(ticker)
+        return ResponseBuilder.create_response(request, message=message) \
+            .with_reprompt(strings.INTENT_GENERAL_REPROMPT)
 
     # Prepare response
     message = strings.INTENT_ADDED_TO_WATCHLIST.format(ticker)
     reprompt_message = strings.INTENT_GENERAL_REPROMPT
+
+    # add ticker to watchlist
+    try:
+        Watchlist(ticker, user_id).save()
+    except EntryExistsError as e:
+        message = strings.INTENT_ADDED_TO_WATCHLIST_EXISTS.format(ticker)
 
     return ResponseBuilder.create_response(request, message=message) \
         .with_reprompt(reprompt_message)

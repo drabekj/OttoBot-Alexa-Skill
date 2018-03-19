@@ -9,6 +9,8 @@ INTENT_WATCHLIST_REPORT_MSG_BODY = " stock {} is valued at ${}"
 INTENT_WATCHLIST_EMPTY_MSG = "Your watchlist is empty. "
 
 INTENT_ADDED_TO_WATCHLIST = "Stock {} was added to watchlist. "
+INTENT_ADDED_TO_WATCHLIST_EXISTS = "Stock {} is already in your watchlist. "
+INTENT_ADDED_TO_WATCHLIST_FAIL = "Couldn't add stock {} to watchlist. "
 
 INTENT_GENERAL_REPROMPT = "Is there something else I can help you with?"
 

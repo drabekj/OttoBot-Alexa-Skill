@@ -1,4 +1,5 @@
 from app import db
+from app.utils.MyError import EntryExistsError
 
 
 class Stock(db.Model):
@@ -55,7 +56,8 @@ class User(db.Model):
 
     userId = db.Column(db.String(255), nullable=False, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
-    watchlist = db.relationship('Watchlist', backref='watchlist', lazy='dynamic')
+    watchlist = db.relationship('Watchlist', backref='watchlist',
+                                lazy='dynamic')
 
     def __init__(self, user_id, name):
         self.userId = user_id
@@ -87,7 +89,12 @@ class Watchlist(db.Model):
         self.userId = user_id
 
     def save(self):
-        db.session.merge(self)
+        if Watchlist.ticker_in_watchlist_exists(self.userId, self.stock_ticker):
+            raise EntryExistsError(
+                message="There is already entry for userId:{0} of stock:{1}"
+                    .format(self.userId, self.stock_ticker))
+
+        db.session.add(self)
         db.session.commit()
 
     @staticmethod
@@ -101,6 +108,15 @@ class Watchlist(db.Model):
         ticker_list = [item.stock_ticker for item in results]
 
         return ticker_list
+
+    @staticmethod
+    def ticker_in_watchlist_exists(user_id, ticker):
+        ticker_list = Watchlist.get_users_tickers(user_id)
+
+        for item in ticker_list:
+            if item == ticker:
+                return True
+        return False
 
     @staticmethod
     def delete_all():

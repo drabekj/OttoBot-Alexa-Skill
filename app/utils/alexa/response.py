@@ -12,7 +12,8 @@ RAW_RESPONSE = """
             "text": "Some default text goes here."
                 },
         "shouldEndSession": False
-    }
+    },
+    "sessionAttributes": {}
 }"""
 
 
@@ -38,9 +39,9 @@ class AlexaResponse(Response):
             message, is_ssml)
         return AlexaResponse(data_json)
 
-    def set_session(self, session_attr):
+    def set_session(self, key, value):
         data_json = json.loads(self.data.decode())
-        data_json['sessionAttributes'] = session_attr
+        data_json['sessionAttributes'][key] = value
         return AlexaResponse(data_json)
 
     def to_json(self):

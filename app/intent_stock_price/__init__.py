@@ -15,9 +15,12 @@ def handle_get_stock_price_intent(request):
     if type(stock) is NoneType:
         print("LOG-e: There was a error getting data for {}".format(ticker))
         message = strings.INTENT_STOCK_PRICE_MSG_FAIL.format(ticker)
+        response = ResponseBuilder.create_response(request, message=message)
     else:
         message = strings.INTENT_STOCK_PRICE_MSG.format(stock.Ticker, stock.Close)
+        response = ResponseBuilder.create_response(request, message=message) \
+            .set_session('stockTicker', stock.Ticker)
+
     reprompt_message = strings.INTENT_GENERAL_REPROMPT
 
-    return ResponseBuilder.create_response(request, message=message) \
-        .with_reprompt(reprompt_message)
+    return response.with_reprompt(reprompt_message)
