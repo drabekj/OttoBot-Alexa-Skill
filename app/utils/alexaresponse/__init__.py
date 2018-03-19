@@ -2,7 +2,8 @@ import json
 
 from flask import Response, request
 
-from app import handle_error_states, FacebookApi
+from app import handle_error_states
+from app.utils import FacebookApi
 from app.models import User
 
 RAW_RESPONSE = """
@@ -33,6 +34,9 @@ def alexa_request(func):
 def authenticated(func):
     """
     Check if user is authenticated (has accessToken).
+    If accessToken is not present build response handle_not_authenticated,
+    If user not yet in DB save it to the user table.
+
     """
 
     def check_access_token(alexafied_request):

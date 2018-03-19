@@ -5,7 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 # local import
-from alexaresponse import ResponseBuilder, alexa_request, AlexaRequest
+from app.utils.alexaresponse import ResponseBuilder, alexa_request, AlexaRequest
 from app.handle_intent import handle_intent
 from app.handle_launch import handle_launch
 from instance.config import app_config

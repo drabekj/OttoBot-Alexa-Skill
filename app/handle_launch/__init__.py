@@ -1,4 +1,4 @@
-from alexaresponse import ResponseBuilder
+from app.utils.alexaresponse import ResponseBuilder
 import static.strings as strings
 
 

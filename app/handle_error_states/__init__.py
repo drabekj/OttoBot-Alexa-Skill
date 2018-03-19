@@ -1,4 +1,4 @@
-import alexaresponse as alexa
+from app.utils import alexaresponse as alexa
 from static import strings
 
 
