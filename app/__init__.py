@@ -2,10 +2,12 @@ from flask_api import FlaskAPI
 from flask_sqlalchemy import SQLAlchemy
 
 # initialize sql-alchemy
+from app.utils.alexa.request import alexa_request
+from app.utils.alexa.response import ResponseBuilder
+
 db = SQLAlchemy()
 
 # local import
-from app.utils.alexaresponse import ResponseBuilder, alexa_request, AlexaRequest
 from app.handle_intent import handle_intent
 from app.handle_launch import handle_launch
 from instance.config import app_config

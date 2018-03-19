@@ -1,5 +1,5 @@
-from app.utils.alexaresponse import ResponseBuilder
 import static.strings as strings
+from app import ResponseBuilder
 
 
 def handle_launch(request):

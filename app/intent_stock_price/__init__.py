@@ -1,6 +1,6 @@
 from sqlalchemy.util import NoneType
 
-from app.utils.alexaresponse import ResponseBuilder, AlexaRequest
+from app import ResponseBuilder
 from app.models import Stock
 from static import strings
 

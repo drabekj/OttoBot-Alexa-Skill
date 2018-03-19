@@ -1,5 +1,6 @@
-from app.utils.alexaresponse import ResponseBuilder, AlexaRequest, authenticated
+from app import ResponseBuilder
 from app.models import Stock, Watchlist
+from app.utils.authentication import authenticated
 from static import strings
 
 
