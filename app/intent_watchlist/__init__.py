@@ -122,8 +122,10 @@ def _add_ticker_to_watchlist(request):
     """Add ticker to users Watchlist if not already there and build response.
         :type request AlexaRequest
     """
-    ticker = request.get_slot_value('stockTicker')
     user_id = request.get_user_id()
+    ticker = request.get_slot_value('stockTicker')
+    if ticker == "NONE":
+        ticker = request.get_session_attribute('stockTicker')
 
     message = strings.INTENT_ADD_TO_WATCHLIST_CONFIRMED.format(ticker)
     reprompt_message = strings.INTENT_GENERAL_REPROMPT
