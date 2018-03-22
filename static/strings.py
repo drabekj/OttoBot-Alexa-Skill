@@ -6,17 +6,21 @@ REQUEST_END_MSG = "Bye bye. "
 INTENT_STOCK_PRICE_MSG = "The price of {0} is ${1}."
 INTENT_STOCK_PRICE_MSG_FAIL = "Sorry, there was a problem getting data for {}"
 
+# Watchlist
 INTENT_WATCHLIST_REPORT_MSG_INTRO = "Here is your watchlist:"
 INTENT_WATCHLIST_REPORT_MSG_BODY = " stock {} is valued at ${}"
 INTENT_WATCHLIST_EMPTY_MSG = "Your watchlist is empty. "
 
-# Watchlist
 INTENT_ADD_TO_WATCHLIST_ASK_CONFIRMATION = "Should I add stock {}? "
 INTENT_ADD_TO_WATCHLIST_DENIED = "Ok, not adding it. "
 INTENT_ADD_TO_WATCHLIST_CONFIRMED = "Ok, adding {} to watchlist. "
 INTENT_ADDED_TO_WATCHLIST = "Stock {} was added to watchlist. "
 INTENT_ADDED_TO_WATCHLIST_EXISTS = "Stock {} is already in your watchlist. "
 INTENT_ADDED_TO_WATCHLIST_FAIL = "Couldn't add stock to watchlist. "
+
+INTENT_REMOVE_FROM_WATCHLIST_ASK_CONFIRMATION = "Should I remove {}? "
+INTENT_REMOVE_FROM_WATCHLIST_DENIED = "Ok, not removing it. "
+INTENT_REMOVE_FROM_WATCHLIST_CONFIRMED = "Ok, removing {} from watchlist. "
 
 INTENT_GENERAL_REPROMPT = "Is there something else I can help you with?"
 

@@ -450,3 +450,157 @@ def intent_add_to_watchlist_confirm():
 
 RESPONSE_intent_add_to_watchlist_confirmed = INTENT_ADD_TO_WATCHLIST_CONFIRMED \
     .format(test_add_stock)
+
+
+def intent_remove_from_watchlist():
+    return {
+        "version": "1.0",
+        "session": {
+            "new": False,
+            "sessionId": "amzn1.echo-api.session.7069db3a-1c85-4c18-90ae-7e95dd36efaa",
+            "application": {
+                "applicationId": "amzn1.ask.skill.dba1346e-5f4a-4f9e-9d14-dc61dd084f96"
+            },
+            "attributes": {
+                "stockTicker": "MSFT"
+            },
+            "user": {
+                "userId": "amzn1.ask.account.AF64Z7P3TBODT4C6VB4SUJG67LSDJXMRPB4ZCN72Z5VSCFIS6COGQPHPPZCTUFCKYVNG37E56FUQHEHZQEMDEZHDP6EJ4ML6CZHBOKETG3TF44YRKRRIHUF4TMFMDKXSSPXBKW62LQVB4JNZ4NPGW5YMTRZZHNBFEYU7J4XF6MZPZRYA4KRS3ZKJHPHSKRB6ZOAHNXQ56T2HP7A",
+                "accessToken": access_token
+            }
+        },
+        "context": {
+            "AudioPlayer": {
+                "playerActivity": "IDLE"
+            },
+            "Display": {
+                "token": ""
+            },
+            "System": {
+                "application": {
+                    "applicationId": "amzn1.ask.skill.dba1346e-5f4a-4f9e-9d14-dc61dd084f96"
+                },
+                "user": {
+                    "userId": "amzn1.ask.account.AF64Z7P3TBODT4C6VB4SUJG67LSDJXMRPB4ZCN72Z5VSCFIS6COGQPHPPZCTUFCKYVNG37E56FUQHEHZQEMDEZHDP6EJ4ML6CZHBOKETG3TF44YRKRRIHUF4TMFMDKXSSPXBKW62LQVB4JNZ4NPGW5YMTRZZHNBFEYU7J4XF6MZPZRYA4KRS3ZKJHPHSKRB6ZOAHNXQ56T2HP7A",
+                    "accessToken": access_token
+                },
+                "device": {
+                    "deviceId": "amzn1.ask.device.AHDOK5CWXV4NE5TF26TG5TYEADGTBNUFFTERBPCFLHQUZPXYL35SLWECEFYCJZNJHSJ633PNN3BFHCDUCKSMY2FCRWFEX2UIW3IHCLM7EIR2XTYSFM3C3ZVHRDMUCIOPGP5DZWU53Y4OVMPEFV23ZW3WIOLQ",
+                    "supportedInterfaces": {
+                        "AudioPlayer": {},
+                        "Display": {
+                            "templateVersion": "1.0",
+                            "markupVersion": "1.0"
+                        }
+                    }
+                },
+                "apiEndpoint": "https://api.amazonalexa.com",
+                "apiAccessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjEifQ.eyJhdWQiOiJodHRwczovL2FwaS5hbWF6b25hbGV4YS5jb20iLCJpc3MiOiJBbGV4YVNraWxsS2l0Iiwic3ViIjoiYW16bjEuYXNrLnNraWxsLmRiYTEzNDZlLTVmNGEtNGY5ZS05ZDE0LWRjNjFkZDA4NGY5NiIsImV4cCI6MTUyMTcxNzgzMiwiaWF0IjoxNTIxNzE0MjMyLCJuYmYiOjE1MjE3MTQyMzIsInByaXZhdGVDbGFpbXMiOnsiY29uc2VudFRva2VuIjpudWxsLCJkZXZpY2VJZCI6ImFtem4xLmFzay5kZXZpY2UuQUhET0s1Q1dYVjRORTVURjI2VEc1VFlFQURHVEJOVUZGVEVSQlBDRkxIUVVaUFhZTDM1U0xXRUNFRllDSlpOSkhTSjYzM1BOTjNCRkhDRFVDS1NNWTJGQ1JXRkVYMlVJVzNJSENMTTdFSVIyWFRZU0ZNM0MzWlZIUkRNVUNJT1BHUDVEWldVNTNZNE9WTVBFRlYyM1pXM1dJT0xRIiwidXNlcklkIjoiYW16bjEuYXNrLmFjY291bnQuQUY2NFo3UDNUQk9EVDRDNlZCNFNVSkc2N0xTREpYTVJQQjRaQ043Mlo1VlNDRklTNkNPR1FQSFBQWkNUVUZDS1lWTkczN0U1NkZVUUhFSFpRRU1ERVpIRFA2RUo0TUw2Q1pIQk9LRVRHM1RGNDRZUktSUklIVUY0VE1GTURLWFNTUFhCS1c2MkxRVkI0Sk5aNE5QR1c1WU1UUlpaSE5CRkVZVTdKNFhGNk1aUFpSWUE0S1JTM1pLSkhQSFNLUkI2Wk9BSE5YUTU2VDJIUDdBIn19.OkXlUEjCd6Iglrsyvlae9gRgPjfdj1qG5YJnwQdhdzybyeGXhEfZmWqgwOunT4I8GFWx5dOwxNWVc9c5niIWW5oglqw_oXYAPk5o3BluqHZ9XswAg9NG7yGD5rfhfhqnnNIAcZLIbfCK0-gnmMmXUEFsPKwSlCNrRafY8RwG9d889G5oWVIdq4eEyO3Y8JpyvSbUTgbzOEAHUI556AJhSRCCNruV6jzVjHpzGkxo290Gtwd53sdMZpB6IdhZAp6Yg9R0CUz92v5WL5mCiXR-TcjuP0qszcN3TaVDXsjkCySR20fSzaeRhHJ6UVielyAJHVVi86eStHO-w0FjzvH_Vg"
+            }
+        },
+        "request": {
+            "type": "IntentRequest",
+            "requestId": "amzn1.echo-api.request.760441d3-3935-497f-807d-5ec71010649b",
+            "timestamp": "2018-03-22T10:23:52Z",
+            "locale": "en-GB",
+            "intent": {
+                "name": "RemoveStockFromWatchlistIntent",
+                "confirmationStatus": "NONE",
+                "slots": {
+                    "stockTicker": {
+                        "name": "stockTicker",
+                        "value": "Amazon",
+                        "resolutions": {
+                            "resolutionsPerAuthority": [
+                                {
+                                    "authority": "amzn1.er-authority.echo-sdk.amzn1.ask.skill.dba1346e-5f4a-4f9e-9d14-dc61dd084f96.LIST_OF_TICKERS",
+                                    "status": {
+                                        "code": "ER_SUCCESS_MATCH"
+                                    },
+                                    "values": [
+                                        {
+                                            "value": {
+                                                "name": test_add_stock,
+                                                "id": "ec367bc4f92cd97cec81bf7b43cffaf7"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "confirmationStatus": "NONE"
+                    }
+                }
+            },
+            "dialogState": "STARTED"
+        }
+    }
+
+
+RESPONSE_intent_remove_from_watchlist_ask_confirmation = \
+    INTENT_REMOVE_FROM_WATCHLIST_ASK_CONFIRMATION.format(test_add_stock)
+
+
+def intent_remove_from_watchlist_deny():
+    return {
+        "version": "1.0",
+        "session": {
+            "new": False,
+            "sessionId": "amzn1.echo-api.session.dd553fd1-97d1-4a04-8f45-6c3634c9dbd6",
+            "application": {
+                "applicationId": "amzn1.ask.skill.dba1346e-5f4a-4f9e-9d14-dc61dd084f96"
+            },
+            "attributes": {
+                "stockTicker": test_add_stock,
+                "userName": test_user_name,
+                "userId": test_user_id
+            },
+            "user": {
+                "userId": "amzn1.ask.account.AF64Z7P3TBODT4C6VB4SUJG67LSDJXMRPB4ZCN72Z5VSCFIS6COGQPHPPZCTUFCKYVNG37E56FUQHEHZQEMDEZHDP6EJ4ML6CZHBOKETG3TF44YRKRRIHUF4TMFMDKXSSPXBKW62LQVB4JNZ4NPGW5YMTRZZHNBFEYU7J4XF6MZPZRYA4KRS3ZKJHPHSKRB6ZOAHNXQ56T2HP7A",
+                "accessToken": "EAAdvSgyprPcBAIKigdddcnZACP9WfbhiIPxTW1UHvW3sWu24S9AXNrbuzPWLoEIxxo8rQaqPZAZBCaHkr0gsTegIpTHIJNHQvQd59ABekEMNMB0xUgZBGJkZByydtZCT6yOwE4rMOg33t3TzO2j1SJFvqymbP1qEIfg5lGu1byUQZDZD"
+            }
+        },
+        "context": {
+            "AudioPlayer": {
+                "playerActivity": "IDLE"
+            },
+            "System": {
+                "application": {
+                    "applicationId": "amzn1.ask.skill.dba1346e-5f4a-4f9e-9d14-dc61dd084f96"
+                },
+                "user": {
+                    "userId": "amzn1.ask.account.AF64Z7P3TBODT4C6VB4SUJG67LSDJXMRPB4ZCN72Z5VSCFIS6COGQPHPPZCTUFCKYVNG37E56FUQHEHZQEMDEZHDP6EJ4ML6CZHBOKETG3TF44YRKRRIHUF4TMFMDKXSSPXBKW62LQVB4JNZ4NPGW5YMTRZZHNBFEYU7J4XF6MZPZRYA4KRS3ZKJHPHSKRB6ZOAHNXQ56T2HP7A",
+                    "accessToken": access_token
+                },
+                "device": {
+                    "deviceId": "amzn1.ask.device.AHDOK5CWXV4NE5TF26TG5TYEADGQ4A47BCE6FXG32QREQSAS66YFK2U6RAIUP3HOVVZSIRA3TV2DRQSYB7PX2HU37EXVILXGXKXVJBZENKWJJ2DBOFPASRBXWEWLTSJPB7FWFYDCV2S7KDLPTNSIYRAQG6UA",
+                    "supportedInterfaces": {
+                        "AudioPlayer": {}
+                    }
+                },
+                "apiEndpoint": "https://api.amazonalexa.com",
+                "apiAccessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjEifQ.eyJhdWQiOiJodHRwczovL2FwaS5hbWF6b25hbGV4YS5jb20iLCJpc3MiOiJBbGV4YVNraWxsS2l0Iiwic3ViIjoiYW16bjEuYXNrLnNraWxsLmRiYTEzNDZlLTVmNGEtNGY5ZS05ZDE0LWRjNjFkZDA4NGY5NiIsImV4cCI6MTUyMTU3MDgyNSwiaWF0IjoxNTIxNTY3MjI1LCJuYmYiOjE1MjE1NjcyMjUsInByaXZhdGVDbGFpbXMiOnsiY29uc2VudFRva2VuIjpudWxsLCJkZXZpY2VJZCI6ImFtem4xLmFzay5kZXZpY2UuQUhET0s1Q1dYVjRORTVURjI2VEc1VFlFQURHUTRBNDdCQ0U2RlhHMzJRUkVRU0FTNjZZRksyVTZSQUlVUDNIT1ZWWlNJUkEzVFYyRFJRU1lCN1BYMkhVMzdFWFZJTFhHWEtYVkpCWkVOS1dKSjJEQk9GUEFTUkJYV0VXTFRTSlBCN0ZXRllEQ1YyUzdLRExQVE5TSVlSQVFHNlVBIiwidXNlcklkIjoiYW16bjEuYXNrLmFjY291bnQuQUY2NFo3UDNUQk9EVDRDNlZCNFNVSkc2N0xTREpYTVJQQjRaQ043Mlo1VlNDRklTNkNPR1FQSFBQWkNUVUZDS1lWTkczN0U1NkZVUUhFSFpRRU1ERVpIRFA2RUo0TUw2Q1pIQk9LRVRHM1RGNDRZUktSUklIVUY0VE1GTURLWFNTUFhCS1c2MkxRVkI0Sk5aNE5QR1c1WU1UUlpaSE5CRkVZVTdKNFhGNk1aUFpSWUE0S1JTM1pLSkhQSFNLUkI2Wk9BSE5YUTU2VDJIUDdBIn19.ckoUTAg_lM6Gwz4Q4WakmZ0MvSc3Zt_pQCCNhBW1X1nY8LWqwkDtAeDL5OcgvwKLeDAkjk2_ct6m0kyHLI45wvfe9iOEgbIuqJjkMz9Y1cSnvLc_RRCzVi1POm5fYBX2jhjcruUXkMXae6-6XoU4NIs7I1xl-IUTAdTI8XKXscuDhNjs30uJb1gQ_Mxoj34woYOS7NgCFXuHKiGtoid5ro61c8HKar7mfhD5-SZ8Ki-8H2vpgiDKNAkh0Ys2Unsk2LNwY604zhkyzG17Be0wT7cbgJ8-vVdrbsDoqIvfJmnCF6M8WTDKbAvMzkCY87ATCzIZjTDr_hDRlqmBuMVNMw"
+            }
+        },
+        "request": {
+            "type": "IntentRequest",
+            "requestId": "amzn1.echo-api.request.905dc8f4-c230-49ee-b3c1-e751edd7ec58",
+            "timestamp": "2018-03-20T17:33:45Z",
+            "locale": "en-US",
+            "intent": {
+                "name": "AddStockToWatchlistIntent",
+                "confirmationStatus": "DENIED",
+                "slots": {
+                    "stockTicker": {
+                        "name": "stockTicker",
+                        "confirmationStatus": "NONE"
+                    }
+                }
+            },
+            "dialogState": "IN_PROGRESS"
+        }
+    }
+
+
+RESPONSE_intent_remove_from_watchlist_denied = \
+    INTENT_REMOVE_FROM_WATCHLIST_DENIED
