@@ -39,6 +39,11 @@ class AlexaResponse(Response):
             message, is_ssml)
         return AlexaResponse(data_json)
 
+    def with_dialog_confirm_intent(self):
+        data_json = json.loads(self.data.decode())
+        data_json['response']['directives'] = [{'type': "Dialog.ConfirmIntent"}]
+        return AlexaResponse(data_json)
+
     def set_session(self, key, value):
         data_json = json.loads(self.data.decode())
         data_json['sessionAttributes'][key] = value
@@ -50,13 +55,13 @@ class AlexaResponse(Response):
 
 class ResponseBuilder(object):
     """
-    Simple class to help users to build responses
+    Simple class to help users to build responses.
     """
     base_response = eval(RAW_RESPONSE)
 
     @classmethod
-    def create_response(self, request=None, message=None, end_session=False, card_obj=None,
-                        reprompt_message=None, is_ssml=None):
+    def create_response(self, request=None, message=None, end_session=False,
+                        card_obj=None, reprompt_message=None, is_ssml=None):
         """
         :type request AlexaRequest
 
@@ -154,7 +159,6 @@ class VoiceHandler(ResponseBuilder):
         return _handler
 
     def route_request(self, request_json, metadata=None):
-
         ''' Route the request object to the right handler function '''
         request = AlexaRequest(request_json)
         request.metadata = metadata

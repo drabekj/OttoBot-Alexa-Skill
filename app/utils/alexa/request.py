@@ -41,6 +41,10 @@ class AlexaRequest(object):
             return False
         return True
 
+    def dialog_state(self):
+        if self.is_intent():
+            return self.request["request"].get('dialogState', {})
+
     def user_id(self):
         return self.request["session"]["user"]["userId"]
 
@@ -50,7 +54,32 @@ class AlexaRequest(object):
     def session_id(self):
         return self.request["session"]["sessionId"]
 
+    def get_session_attribute(self, attribut_key):
+        return self.request["session"]["attributes"][attribut_key]
+
     def get_slot_value(self, slot_name):
+        """
+        Get the corrected slot value from resolutions, if no match found,
+        fallback to raw slot value.
+        """
+        try:
+            slot = self.request["request"]["intent"]["slots"][slot_name]
+            resolutions = slot['resolutions']['resolutionsPerAuthority'][0]
+
+            if resolutions['status']['code'] == "ER_SUCCESS_MATCH":
+                value = resolutions['values'][0]['value']['name']
+            else:
+                value = self._get_slot_value_fallback(slot_name)
+
+            return value
+        except:
+            """Value not found"""
+            return None
+
+    def _get_slot_value_fallback(self, slot_name):
+        """
+        Get raw slot value. You should use "get_slot_value instead."
+        """
         try:
             return self.request["request"]["intent"]["slots"][slot_name][
                 "value"]
@@ -77,3 +106,6 @@ class AlexaRequest(object):
 
     def get_user_name(self):
         return self.session['userName']
+
+    def get_intent_confirmation_status(self):
+        return self.request['request'].get('intent', {}).get('confirmationStatus', None)

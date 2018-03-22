@@ -34,3 +34,15 @@ class UnknownIntentError(Error):
 
     def __init__(self, message):
         self.message = message
+
+
+class UnknownStockError(Error):
+    """Exception raised when unknown intent is received.
+
+    Attributes:
+        message -- explanation of the error
+    """
+
+    def __init__(self, ticker="", message=""):
+        self.ticker = ticker
+        self.message = message

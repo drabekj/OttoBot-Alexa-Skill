@@ -2,8 +2,10 @@ from flask_api import FlaskAPI
 from flask_sqlalchemy import SQLAlchemy
 
 # initialize sql-alchemy
+from app.handle_end import handle_end
+from app.utils.logger import logger
 from app.utils.MyError import UnknownRequestError
-from app.utils.alexa.request import alexa_request
+from app.utils.alexa.request import alexa_request, AlexaRequest
 from app.utils.alexa.response import ResponseBuilder
 
 db = SQLAlchemy()
@@ -42,6 +44,8 @@ def create_app(config_name):
         Route POST request by request type.
         :type request: AlexaRequest
         """
+        logger.debug(f"request intent={request.intent_name()} received: {request.request}")
+
         if request.request_type() == "LaunchRequest":
             return handle_launch(request)
         elif request.request_type() == "IntentRequest":
@@ -49,8 +53,7 @@ def create_app(config_name):
         elif request.request_type() == "Dialog.Delegate":
             return handle_intent(request)
         elif request.request_type() == "SessionEndedRequest":
-            # TODO SessionEndedRequest
-            pass
+            return handle_end(request)
         else:
             raise UnknownRequestError(request.request_type())
 

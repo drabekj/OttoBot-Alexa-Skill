@@ -119,7 +119,7 @@ class OttoBotServerTestCase(unittest.TestCase):
 
         # Assert
         self.assertEqual(res.status_code, 200)
-        self.assertIn(RESPONSE_intent_add_to_watchlist, str(res.data))
+        self.assertIn(RESPONSE_intent_add_to_watchlist_ask_confirmation, str(res.data))
 
     def tearDown(self):
         """teardown all initialized variables."""

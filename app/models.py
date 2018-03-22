@@ -1,4 +1,6 @@
-from app import db
+from sqlalchemy.exc import OperationalError
+
+from app import db, logger
 from app.utils.MyError import EntryExistsError
 
 
@@ -64,8 +66,12 @@ class User(db.Model):
         self.name = name
 
     def save(self):
-        db.session.merge(self)
-        db.session.commit()
+        try:
+            db.session.merge(self)
+            db.session.commit()
+        except OperationalError as e:
+            logger.exception("Can't connect to MySQL server ottobotdb.clccaawfuuph.eu-central-1.rds.amazonaws.com")
+
 
     @staticmethod
     def get_user(user_id):
@@ -102,9 +108,13 @@ class Watchlist(db.Model):
         """
         :return: List[str] of tickers for given user in his watchlist
         """
-
-        results = Watchlist.query.filter_by(userId=user_id).all()
+        results = []
         """:type results list[Watchlist]"""
+
+        try:
+            results = Watchlist.query.filter_by(userId=user_id).all()
+        except OperationalError:
+            logger.exception("Can't connect to MySQL server ottobotdb.clccaawfuuph.eu-central-1.rds.amazonaws.com")
         ticker_list = [item.stock_ticker for item in results]
 
         return ticker_list
