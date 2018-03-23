@@ -108,7 +108,6 @@ class Watchlist(db.Model):
             result = Watchlist.query\
                 .filter_by(userId=self.userId, stock_ticker=self.stock_ticker)\
                 .first()
-            # TODO crashes when deleting stock which is not there
             db.session.delete(result)
             db.session.commit()
             logger.info(f"Deleted users:{self.userId} stock:{self.stock_ticker} from DB")

@@ -46,7 +46,7 @@ class AlexaRequest(object):
             return self.request["request"].get('dialogState', {})
 
     def user_id(self):
-        return self.request["session"]["user"]["userId"]
+        return self.request["session"]["attributes"]["userId"]
 
     def access_token(self):
         return self.request['session']['user']['accessToken']
