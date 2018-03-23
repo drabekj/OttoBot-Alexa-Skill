@@ -452,7 +452,7 @@ RESPONSE_intent_add_to_watchlist_confirmed = INTENT_ADD_TO_WATCHLIST_CONFIRMED \
     .format(test_add_stock)
 
 
-def intent_remove_from_watchlist():
+def intent_remove_from_watchlist(ticker):
     return {
         "version": "1.0",
         "session": {
@@ -520,7 +520,7 @@ def intent_remove_from_watchlist():
                                     "values": [
                                         {
                                             "value": {
-                                                "name": test_add_stock,
+                                                "name": ticker,
                                                 "id": "ec367bc4f92cd97cec81bf7b43cffaf7"
                                             }
                                         }
@@ -719,3 +719,5 @@ def intent_remove_from_watchlist_confirm():
 
 RESPONSE_intent_remove_from_watchlist_confirmed = \
     INTENT_REMOVE_FROM_WATCHLIST_CONFIRMED
+RESPONSE_intent_remove_from_watchlist_not_there = \
+    INTENT_REMOVE_FROM_WATCHLIST_NOT_THERE.format(test_stock_1_ticker)

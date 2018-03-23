@@ -36,7 +36,7 @@ class RemoveFromWatchlistTestCase(unittest.TestCase):
         self.assertIn(test_add_stock, watchlist)
 
         # Step 1 ask to remove stock (stock present)
-        res = self._remove_from_watchlist()
+        res = self._remove_from_watchlist(test_add_stock)
         # Assert
         self.assertEqual(res.status_code, 200)
         self.assertIn(RESPONSE_intent_remove_from_watchlist_ask_confirmation,
@@ -64,23 +64,56 @@ class RemoveFromWatchlistTestCase(unittest.TestCase):
         Flow, there is a stock in users watchlist, user asks to remove it but
         denies it afterwards."""
         # Setup: check if there is stock in users watchlist
+        with self.app.app_context():
+            watchlist = Watchlist.get_users_tickers(test_user_id)
+        self.assertIn(test_add_stock, watchlist)
 
-        # ask to remove stock
+        # Step 1 ask to remove stock (stock present)
+        res = self._remove_from_watchlist(test_add_stock)
+        # Assert
+        self.assertEqual(res.status_code, 200)
+        self.assertIn(RESPONSE_intent_remove_from_watchlist_ask_confirmation,
+                      str(res.data))
 
-        # deny
+        # Step 2 Confirm removing the stock
+        # Prepare request
+        request = json.dumps(intent_remove_from_watchlist_confirm())
 
-        pass
+        # Execute
+        res = self.client().post('/api/', data=request,
+                                 content_type='application/json')
+
+        # Assert
+        self.assertEqual(res.status_code, 200)
+        self.assertIn(RESPONSE_intent_remove_from_watchlist_confirmed
+                      .format(test_add_stock),
+                      str(res.data))
+        # Check if stock was removed from watchlist
+        with self.app.app_context():
+            watchlist = Watchlist.get_users_tickers(test_user_id)
+        self.assertNotIn(test_add_stock, watchlist)
 
     def test_watchlist_empty(self):
         """Test removing stock from watchlist when watchlist is empty."""
-        # ask to remove stock
+
+        # Setup: check the target stock is not in users watchlist
+        with self.app.app_context():
+            watchlist = Watchlist.get_users_tickers(test_user_id)
+        self.assertNotIn(test_stock_1_ticker, watchlist)
+
+        # Step 1 ask to remove stock (stock not present)
+        res = self._remove_from_watchlist(test_stock_1_ticker)
+        # Assert
+        self.assertEqual(res.status_code, 200)
+        self.assertIn(RESPONSE_intent_remove_from_watchlist_not_there,
+                      str(res.data))
         pass
 
-    def _remove_from_watchlist(self):
+    def _remove_from_watchlist(self, ticker):
         """Test removing stock from watchlist, no assertion.
         :return: response to the request"""
         # Prepare request
-        request = json.dumps(intent_remove_from_watchlist())
+        request = json.dumps(intent_remove_from_watchlist(ticker))
 
         # Execute
         res = self.client().post('/api/', data=request,
