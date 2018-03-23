@@ -21,6 +21,8 @@ INTENT_ADDED_TO_WATCHLIST_FAIL = "Couldn't add stock to watchlist. "
 INTENT_REMOVE_FROM_WATCHLIST_ASK_CONFIRMATION = "Should I remove {}? "
 INTENT_REMOVE_FROM_WATCHLIST_DENIED = "Ok, not removing it. "
 INTENT_REMOVE_FROM_WATCHLIST_CONFIRMED = "Ok, removing {} from watchlist. "
+INTENT_REMOVE_FROM_WATCHLIST_NOT_THERE = "There is no stock {} in your watchlist. "
+INTENT_REMOVE_FROM_WATCHLIST_FAIL = "Couldn't remove stock from watchlist. "
 
 INTENT_GENERAL_REPROMPT = "Is there something else I can help you with?"
 

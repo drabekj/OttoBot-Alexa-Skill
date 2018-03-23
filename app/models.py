@@ -103,6 +103,18 @@ class Watchlist(db.Model):
         db.session.add(self)
         db.session.commit()
 
+    def delete(self):
+        try:
+            result = Watchlist.query\
+                .filter_by(userId=self.userId, stock_ticker=self.stock_ticker)\
+                .first()
+            # TODO crashes when deleting stock which is not there
+            db.session.delete(result)
+            db.session.commit()
+            logger.info(f"Deleted users:{self.userId} stock:{self.stock_ticker} from DB")
+        except:
+            logger.exception(f"Couldn't delete {self.stock_ticker} for user {self.userId} from DB")
+
     @staticmethod
     def get_users_tickers(user_id):
         """

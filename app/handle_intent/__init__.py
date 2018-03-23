@@ -12,5 +12,7 @@ def handle_intent(request):
         return intent_watchlist.handle_report_stock_watchlist(request)
     elif intent_name == 'AddStockToWatchlistIntent':
         return intent_watchlist.handle_add_to_watchlist(request)
+    elif intent_name == 'RemoveStockFromWatchlistIntent':
+        return intent_watchlist.handle_remove_from_watchlist(request)
     else:
         raise UnknownIntentError('Cant handle this type of intent: ' + intent_name)

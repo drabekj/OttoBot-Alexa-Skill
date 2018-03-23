@@ -85,7 +85,7 @@ def _handle_dialog_add_started(request):
     try:
         ticker = _check_valid_ticker_provided(request)
     except AttributeError as e:
-        print("LOG-e: no valid ticker provided")
+        logger.exception("No valid ticker provided")
         message = strings.INTENT_ADDED_TO_WATCHLIST_FAIL
         return ResponseBuilder.create_response(request, message=message) \
             .with_reprompt(strings.INTENT_GENERAL_REPROMPT)
@@ -98,24 +98,13 @@ def _handle_dialog_add_started(request):
 
 def _handle_dialog_add_in_progress(request):
     """:type request AlexaRequest"""
-    print("LOG-d: dialogState IN_PROGRESS")
+    logger.debug("dialogState IN_PROGRESS")
 
     if request.get_intent_confirmation_status() == "CONFIRMED":
         return _add_ticker_to_watchlist(request)
     else:
         message = strings.INTENT_ADD_TO_WATCHLIST_DENIED
         return ResponseBuilder.create_response(request, message=message)
-
-
-def _check_valid_ticker_provided(request):
-    ticker = request.get_slot_value('stockTicker')
-
-    if ticker is None:
-        ticker = request.session.get('stockTicker', None)
-    if ticker is None:
-        raise AttributeError("no valid ticker provided")
-
-    return ticker
 
 
 def _add_ticker_to_watchlist(request):
@@ -138,3 +127,90 @@ def _add_ticker_to_watchlist(request):
 
     return ResponseBuilder.create_response(request, message=message) \
         .with_reprompt(reprompt_message)
+
+# RemoveStockFromWatchlistIntent
+@authenticated
+def handle_remove_from_watchlist(request):
+    """:type request AlexaRequest"""
+
+    if request.dialog_state() == "STARTED":
+        return _handle_dialog_remove_started(request)
+    elif request.dialog_state() == "IN_PROGRESS":
+        return _handle_dialog_remove_in_progress(request)
+    elif request.dialog_state() == "COMPLETED":
+        # TODO
+        return ResponseBuilder.create_response(request, "Add to watchlist dialog completed! ")
+    elif request.dialog_state() == "":
+        # TODO
+        print("LOG-d: dialogState not included")
+        return ResponseBuilder.create_response(request, "Add to watchlist dialog state empty! ")
+    else:
+        print("LOG-d: dialogState else")
+        # TODO
+        print("LOG-d: dialogState not included")
+        return ResponseBuilder.create_response(request, "Add to watchlist dialog state ELSE! ")
+
+
+def _handle_dialog_remove_started(request):
+    """:type request AlexaRequest"""
+    logger.debug("dialogState STARTED")
+
+    # Check if ticker is provided
+    try:
+        ticker = _check_valid_ticker_provided(request)
+    except AttributeError as e:
+        logger.exception("No valid ticker provided")
+        message = strings.INTENT_REMOVE_FROM_WATCHLIST_FAIL
+        return ResponseBuilder.create_response(request, message=message) \
+            .with_reprompt(strings.INTENT_GENERAL_REPROMPT)
+
+    # Ask user to confirm ticker remove
+    message = strings.INTENT_REMOVE_FROM_WATCHLIST_ASK_CONFIRMATION \
+        .format(ticker)
+    return ResponseBuilder.create_response(request, message) \
+        .with_dialog_confirm_intent()
+
+
+def _handle_dialog_remove_in_progress(request):
+    """:type request AlexaRequest"""
+    logger.debug("dialogState IN_PROGRESS")
+
+    if request.get_intent_confirmation_status() == "CONFIRMED":
+        return _remove_ticker_from_watchlist(request)
+    else:
+        message = strings.INTENT_REMOVE_FROM_WATCHLIST_DENIED
+        return ResponseBuilder.create_response(request, message=message)
+
+
+def _remove_ticker_from_watchlist(request):
+    """Remove ticker from users Watchlist if there and build response.
+        :type request AlexaRequest
+    """
+    user_id = request.get_user_id()
+    ticker = request.get_slot_value('stockTicker')
+    if ticker == "NONE":
+        ticker = request.get_session_attribute('stockTicker')
+
+    message = strings.INTENT_REMOVE_FROM_WATCHLIST_CONFIRMED.format(ticker)
+    reprompt_message = strings.INTENT_GENERAL_REPROMPT
+
+    # Check if ticker not already in Watchlist
+    try:
+        Watchlist(ticker, user_id).delete()
+    except EntryExistsError as e:
+        message = strings.INTENT_REMOVE_FROM_WATCHLIST_NOT_THERE.format(ticker)
+
+    return ResponseBuilder.create_response(request, message=message) \
+        .with_reprompt(reprompt_message)
+
+
+# Helper
+def _check_valid_ticker_provided(request):
+    ticker = request.get_slot_value('stockTicker')
+
+    if ticker is None:
+        ticker = request.session.get('stockTicker', None)
+    if ticker is None:
+        raise AttributeError("No valid ticker provided")
+
+    return ticker
