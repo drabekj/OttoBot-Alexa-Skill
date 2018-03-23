@@ -43,6 +43,12 @@ class Stock(db.Model):
         return Stock.query.filter_by(Ticker=ticker) \
             .order_by(Stock.Date.desc()).first()
 
+    @staticmethod
+    def get_nth_latest(ticker, n=0):
+        """ Get the n-th latest entry for ticker, where n=0 is the most recent one."""
+        return Stock.query.filter_by(Ticker=ticker) \
+            .order_by(Stock.Date.desc()).limit(n)
+
     def delete(self):
         db.session.delete(self)
         db.session.commit()
