@@ -1,5 +1,7 @@
 import app.intent_stock_price as intent_stock
-from app import intent_watchlist
+from app.intent_watchlist.add import handle_add_to_watchlist
+from app.intent_watchlist.remove import handle_remove_from_watchlist
+from app.intent_watchlist.report import handle_report_stock_watchlist
 from app.utils.MyError import UnknownIntentError
 
 
@@ -9,10 +11,10 @@ def handle_intent(request):
     if intent_name == 'WhatsTheStockPriceIntent':
         return intent_stock.handle_get_stock_price_intent(request)
     elif intent_name == 'ReportStockWatchlistIntent':
-        return intent_watchlist.handle_report_stock_watchlist(request)
+        return handle_report_stock_watchlist(request)
     elif intent_name == 'AddStockToWatchlistIntent':
-        return intent_watchlist.handle_add_to_watchlist(request)
+        return handle_add_to_watchlist(request)
     elif intent_name == 'RemoveStockFromWatchlistIntent':
-        return intent_watchlist.handle_remove_from_watchlist(request)
+        return handle_remove_from_watchlist(request)
     else:
         raise UnknownIntentError('Cant handle this type of intent: ' + intent_name)
