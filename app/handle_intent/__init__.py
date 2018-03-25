@@ -1,5 +1,6 @@
 import app.intent_stock_price as intent_stock
 from app import handle_end
+from app.intent_education import handle_education
 from app.intent_watchlist.add import handle_add_to_watchlist
 from app.intent_watchlist.remove import handle_remove_from_watchlist
 from app.intent_watchlist.report import handle_report_stock_watchlist
@@ -17,6 +18,8 @@ def handle_intent(request):
         return handle_add_to_watchlist(request)
     elif intent_name == 'RemoveStockFromWatchlistIntent':
         return handle_remove_from_watchlist(request)
+    elif intent_name == 'EducateIntent':
+        return handle_education(request)
     elif intent_name == 'AMAZON.StopIntent':
         return handle_end(request)
     else:
