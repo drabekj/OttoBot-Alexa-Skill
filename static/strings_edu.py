@@ -1,0 +1,3 @@
+TERM_EQUITY = "In accounting, equity is the difference between the value of the assets and the value of the liabilities of something owned."
+TERM_PE_RATIO = "Price Earnings Ratio is a valuation of companies last traded share price to its latest reported 12 months earnings per share. For example, if the last traded share price of any X company is INR 40 and earnings over a last 12 months per share is INR 2, then the P/E ratio of that X company is INR 20 (40/2) "
+TERM_MARKET_CAP = "Market Capitalization is the total value in INR of all of a company’s outstanding shares. It is calculated by multiplying all the outstanding shares with the current market price of one share. It determines the company’s size in terms of its wealth."

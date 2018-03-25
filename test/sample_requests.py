@@ -3,6 +3,8 @@ from datetime import date
 from static.strings import *
 
 # Test data values
+from static.strings_edu import TERM_EQUITY
+
 test_stock_1_ticker = "TSLA"
 test_stock_1_date_1 = date(2018, 1, 1)
 test_stock_1_date = date(2018, 1, 2)
@@ -727,3 +729,77 @@ RESPONSE_intent_remove_from_watchlist_confirmed = \
     INTENT_REMOVE_FROM_WATCHLIST_CONFIRMED
 RESPONSE_intent_remove_from_watchlist_not_there = \
     INTENT_REMOVE_FROM_WATCHLIST_NOT_THERE.format(test_stock_1_ticker)
+
+
+def intent_education_equity():
+    return {
+        'version': '1.0',
+        'session': {
+            'new': False,
+            'sessionId': 'amzn1.echo-api.session.9793a0a7-619c-4f11-832c-255f5b5ded0a',
+            'application': {
+                'applicationId': 'amzn1.ask.skill.dba1346e-5f4a-4f9e-9d14-dc61dd084f96'
+            },
+            'user': {
+                'userId': 'amzn1.ask.account.AF64Z7P3TBODT4C6VB4SUJG67LSDJXMRPB4ZCN72Z5VSCFIS6COGQPHPPZCTUFCKYVNG37E56FUQHEHZQEMDEZHDP6EJ4ML6CZHBOKETG3TF44YRKRRIHUF4TMFMDKXSSPXBKW62LQVB4JNZ4NPGW5YMTRZZHNBFEYU7J4XF6MZPZRYA4KRS3ZKJHPHSKRB6ZOAHNXQ56T2HP7A',
+                'accessToken': access_token
+            }
+        },
+        'context': {
+            'AudioPlayer': {
+                'playerActivity': 'STOPPED'
+            },
+            'System': {
+                'application': {
+                    'applicationId': 'amzn1.ask.skill.dba1346e-5f4a-4f9e-9d14-dc61dd084f96'
+                },
+                'user': {
+                    'userId': 'amzn1.ask.account.AF64Z7P3TBODT4C6VB4SUJG67LSDJXMRPB4ZCN72Z5VSCFIS6COGQPHPPZCTUFCKYVNG37E56FUQHEHZQEMDEZHDP6EJ4ML6CZHBOKETG3TF44YRKRRIHUF4TMFMDKXSSPXBKW62LQVB4JNZ4NPGW5YMTRZZHNBFEYU7J4XF6MZPZRYA4KRS3ZKJHPHSKRB6ZOAHNXQ56T2HP7A',
+                    'accessToken':access_token
+                },
+                'device': {
+                    'deviceId': 'amzn1.ask.device.AHDOK5CWXV4NE5TF26TG5TYEADGUXG2VGOZVSI26DKPB2SHOPZIK7IP6PB242QH4JSHRVNBXXOCKROBQ3MGYAB5AKBFX36SE6TKYW6C7AYLYQFNOLG2MNZDZ2IONXJCOZDUWQURABRQSRHZNB3N3OCHVCK7TCGTCPZJTNX76ARBSTZSREG2JG',
+                    'supportedInterfaces': {
+                        'AudioPlayer': {}
+                    }
+                },
+                'apiEndpoint': 'https://api.amazonalexa.com',
+                'apiAccessToken': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjEifQ.eyJhdWQiOiJodHRwczovL2FwaS5hbWF6b25hbGV4YS5jb20iLCJpc3MiOiJBbGV4YVNraWxsS2l0Iiwic3ViIjoiYW16bjEuYXNrLnNraWxsLmRiYTEzNDZlLTVmNGEtNGY5ZS05ZDE0LWRjNjFkZDA4NGY5NiIsImV4cCI6MTUyMjAxNjcxOSwiaWF0IjoxNTIyMDEzMTE5LCJuYmYiOjE1MjIwMTMxMTksInByaXZhdGVDbGFpbXMiOnsiY29uc2VudFRva2VuIjpudWxsLCJkZXZpY2VJZCI6ImFtem4xLmFzay5kZXZpY2UuQUhET0s1Q1dYVjRORTVURjI2VEc1VFlFQURHVVhHMlZHT1pWU0kyNkRLUEIyU0hPUFpJSzdJUDZQQjI0MlFINEpTSFJWTkJYWE9DS1JPQlEzTUdZQUI1QUtCRlgzNlNFNlRLWVc2QzdBWUxZUUZOT0xHMk1OWkRaMklPTlhKQ09aRFVXUVVSQUJSUVNSSFpOQjNOM09DSFZDSzdUQ0dUQ1BaSlROWDc2QVJCU1RaU1JFRzJKRyIsInVzZXJJZCI6ImFtem4xLmFzay5hY2NvdW50LkFGNjRaN1AzVEJPRFQ0QzZWQjRTVUpHNjdMU0RKWE1SUEI0WkNONzJaNVZTQ0ZJUzZDT0dRUEhQUFpDVFVGQ0tZVk5HMzdFNTZGVVFIRUhaUUVNREVaSERQNkVKNE1MNkNaSEJPS0VURzNURjQ0WVJLUlJJSFVGNFRNRk1ES1hTU1BYQktXNjJMUVZCNEpOWjROUEdXNVlNVFJaWkhOQkZFWVU3SjRYRjZNWlBaUllBNEtSUzNaS0pIUEhTS1JCNlpPQUhOWFE1NlQySFA3QSJ9fQ.h9QzcQtrZj1YfdJgAPIuVSo2N3goUhJhc1p-fzoNfH3Z-goQkvXCfn5Pzh1_lINU15Wne3qXXLI7bUGcakWaQU9ZZRjeNQjtXgk9BuiQfjpgUpYX05ddZOB5FK1QF0FepHYq1m-HsxOzSig2PepXSAMekhF6Ebwtvfmq3Pb_AzEwWPe2MpkeYan2nGJlD22G6diByV8tarDHh4kB6zS-yzQmDfxOZASZg5p9PmZ4W6LXF-mmdLL0MObMPhJgjZzBN5kARb2ov4Wq7MgxYKSrSxanlRYOnvK6op85AFHVF6y4lmnUFMZO611Fc5NaUCGyVgwJWEHA9xRX1Tk-6lUmRQ'
+            }
+        },
+        'request': {
+            'type': 'IntentRequest',
+            'requestId': 'amzn1.echo-api.request.4c98b9a2-dfe2-47ce-8838-b211695c733d',
+            'timestamp': '2018-03-25T21:25:19Z',
+            'locale': 'en-US',
+            'intent': {
+                'name': 'EducateIntent',
+                'confirmationStatus': 'NONE',
+                'slots': {
+                    'term': {
+                        'name': 'term',
+                        'value': 'equity',
+                        'resolutions': {
+                            'resolutionsPerAuthority': [{
+                                'authority': 'amzn1.er-authority.echo-sdk.amzn1.ask.skill.dba1346e-5f4a-4f9e-9d14-dc61dd084f96.LIST_OF_TERMS',
+                                'status': {
+                                    'code': 'ER_SUCCESS_MATCH'
+                                },
+                                'values': [{
+                                    'value': {
+                                        'name': 'Equity',
+                                        'id': 'd9df825203724a2f3412de3fc7a7a2be'
+                                    }
+                                }]
+                            }]
+                        },
+                        'confirmationStatus': 'NONE'
+                    }
+                }
+            },
+            'dialogState': 'STARTED'
+        }
+    }
+
+
+RESPONSE_intent_education_equity = TERM_EQUITY
