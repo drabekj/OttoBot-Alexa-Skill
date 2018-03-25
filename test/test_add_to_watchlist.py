@@ -21,7 +21,7 @@ class AddToWatchlistTestCase(unittest.TestCase):
             db.create_all()
 
             # Insert testing data
-            Stock(test_stock_1_ticker, test_stock_1_date, Close=test_stock_1_close).save()
+            Stock(test_stock_1_ticker, test_stock_1_date, close=test_stock_1_close).save()
             User(test_user_id, test_user_name).save()
 
     def test_intent_add_to_watchlist_dialog(self):

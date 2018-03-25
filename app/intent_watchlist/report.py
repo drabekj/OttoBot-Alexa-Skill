@@ -15,14 +15,14 @@ def handle_report_stock_watchlist(request):
 
     # Query DB for watchlist data
     ticker_list = Watchlist.get_users_tickers(user_id)
-    stocks = _get_stocks_24h_change(ticker_list)
+    changes = _get_stocks_24h_change(ticker_list)
     """:type stocks list[Watchlist]"""
 
     # Prepare response
-    if not stocks:
+    if not changes:
         message = strings.INTENT_WATCHLIST_EMPTY_MSG
     else:
-        message = _build_report_msg(stocks)
+        message = _build_report_msg(ticker_list, changes)
 
     reprompt_message = strings.INTENT_GENERAL_REPROMPT
 
@@ -30,12 +30,17 @@ def handle_report_stock_watchlist(request):
         .with_reprompt(reprompt_message)
 
 
-def _build_report_msg(stocks):
+def _build_report_msg(ticker_list, changes):
     message = strings.INTENT_WATCHLIST_REPORT_MSG_INTRO
-    for stock in stocks:
+    for index, ticker in enumerate(ticker_list):
         try:
+            if changes[index] < 0:
+                movement = "down"
+            else:
+                movement = "up"
+
             message += strings.INTENT_WATCHLIST_REPORT_MSG_BODY \
-                .format(stock.Ticker, stock.Close)
+                .format(ticker, movement, abs(changes[index]))
         except AttributeError:
             raise UnknownStockError()
 
@@ -47,7 +52,8 @@ def _get_stocks(ticker_list):
     for ticker in ticker_list:
         data = Stock.get_last(ticker)
         if data is None:
-            logger.error(f"Watchlist contains unknown stock ticker: " + str(ticker))
+            logger.error(
+                f"Watchlist contains unknown stock ticker: " + str(ticker))
             raise UnknownStockError(ticker)
         stocks.append(data)
 
@@ -55,19 +61,22 @@ def _get_stocks(ticker_list):
 
 
 def _get_stocks_24h_change(ticker_list):
-    stocks = []
+    """ :return: List of % 24h changes for stocks in ticker_list. """
+    changes = []
     for ticker in ticker_list:
-        last_2_stock_entries = Stock.get_last_n(ticker, n=2)
-        """  :type last_2_stock_entries BaseQuery """
-        count = last_2_stock_entries.count()
-        all = last_2_stock_entries.all()
-        first = last_2_stock_entries.first()
+        last_2_stock_entries = Stock.get_nth_latest(ticker, n=2)
         """ :type Stock[] last_2_stock_entries """
-        price_change = last_2_stock_entries[0].Close - last_2_stock_entries[1].Close
+        price_change = _compute_percent_change(last_2_stock_entries[0].close,
+                                               last_2_stock_entries[1].close)
 
         if price_change is None:
-            logger.error(f"Watchlist contains unknown stock ticker: " + str(ticker))
+            logger.error(
+                f"Watchlist contains unknown stock ticker: " + str(ticker))
             raise UnknownStockError(ticker)
-        stocks.append(price_change)
+        changes.append(price_change)
 
-    return stocks
+    return changes
+
+
+def _compute_percent_change(start_val, end_val):
+    return 100 - 100 / start_val * end_val

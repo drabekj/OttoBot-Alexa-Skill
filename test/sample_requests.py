@@ -4,12 +4,18 @@ from static.strings import *
 
 # Test data values
 test_stock_1_ticker = "TSLA"
-test_stock_1_date = date(2018, 1, 1)
-test_stock_1_close = 333.33
+test_stock_1_date_1 = date(2018, 1, 1)
+test_stock_1_date = date(2018, 1, 2)
+test_stock_1_close_1 = 333.33
+test_stock_1_close = 344.44
+test_stock_1_price_change = 3.23
 
 test_stock_2_ticker = "IBM"
-test_stock_2_date = date(2018, 1, 1)
-test_stock_2_close = 159.22
+test_stock_2_date_1 = date(2018, 1, 1)
+test_stock_2_date = date(2018, 1, 2)
+test_stock_2_close_1 = 153.22
+test_stock_2_close = 150.00
+test_stock_2_price_change = 2.15
 
 test_user_id = 2003646219648973
 test_user_name = "John"
@@ -183,9 +189,9 @@ def intent_report_watchlist():
 
 RESPONSE_intent_report_watchlist = INTENT_WATCHLIST_REPORT_MSG_INTRO \
                                    + INTENT_WATCHLIST_REPORT_MSG_BODY.format(
-    test_stock_1_ticker, test_stock_1_close) \
+    test_stock_1_ticker, "up", test_stock_1_price_change) \
                                    + INTENT_WATCHLIST_REPORT_MSG_BODY.format(
-    test_stock_2_ticker, test_stock_2_close)
+    test_stock_2_ticker, "down", test_stock_2_price_change)
 
 RESPONSE_intent_report_empty_watchlist = INTENT_WATCHLIST_EMPTY_MSG
 

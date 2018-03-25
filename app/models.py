@@ -9,30 +9,31 @@ class Stock(db.Model):
 
     __tablename__ = 'Stock'
 
-    Ticker = db.Column(db.String(255), primary_key=True)
-    Date = db.Column(db.DateTime, default=db.func.current_timestamp())
-    Open = db.Column(db.Float())
-    High = db.Column(db.Float())
-    Low = db.Column(db.Float())
-    Close = db.Column(db.Float())
-    Volume = db.Column(db.Float())
-    ExDividend = db.Column(db.Float())
-    SplitRatio = db.Column(db.Float())
-    AdjOpen = db.Column(db.Float())
+    stockId = db.Column(db.Integer, primary_key=True)
+    ticker = db.Column(db.String(255))
+    date = db.Column(db.DateTime, default=db.func.current_timestamp())
+    open = db.Column(db.Float())
+    high = db.Column(db.Float())
+    low = db.Column(db.Float())
+    close = db.Column(db.Float())
+    volume = db.Column(db.Float())
+    ex_dividend = db.Column(db.Float())
+    split_ratio = db.Column(db.Float())
+    adj_open = db.Column(db.Float())
 
-    def __init__(self, Ticker, Date, Open=0, High=0, Low=0, Close=0, Volume=0,
-                 ExDividend=0, SplitRatio=0, AdjOpen=0):
+    def __init__(self, ticker, date, open=0, high=0, low=0, close=0, volume=0,
+                 ex_dividend=0, split_ratio=0, adj_open=0):
         """initialize with name."""
-        self.Ticker = Ticker
-        self.Date = Date
-        self.Open = Open
-        self.High = High
-        self.Low = Low
-        self.Close = Close
-        self.Volume = Volume
-        self.ExDividend = ExDividend
-        self.SplitRatio = SplitRatio
-        self.AdjOpen = AdjOpen
+        self.ticker = ticker
+        self.date = date
+        self.open = open
+        self.high = high
+        self.low = low
+        self.close = close
+        self.volume = volume
+        self.ex_dividend = ex_dividend
+        self.SplitRatio = split_ratio
+        self.AdjOpen = adj_open
 
     def save(self):
         db.session.add(self)
@@ -40,21 +41,21 @@ class Stock(db.Model):
 
     @staticmethod
     def get_last(ticker):
-        return Stock.query.filter_by(Ticker=ticker) \
-            .order_by(Stock.Date.desc()).first()
+        return Stock.query.filter_by(ticker=ticker) \
+            .order_by(Stock.date.desc()).first()
 
     @staticmethod
     def get_nth_latest(ticker, n=0):
         """ Get the n-th latest entry for ticker, where n=0 is the most recent one."""
-        return Stock.query.filter_by(Ticker=ticker) \
-            .order_by(Stock.Date.desc()).limit(n)
+        return Stock.query.filter_by(ticker=ticker) \
+            .order_by(Stock.date.desc()).limit(n).all()
 
     def delete(self):
         db.session.delete(self)
         db.session.commit()
 
     def __repr__(self):
-        return "<Stock: {} {} {}>".format(self.Date, self.Ticker, self.Close)
+        return "<Stock: {} {} {}>".format(self.date, self.ticker, self.close)
 
 
 class User(db.Model):

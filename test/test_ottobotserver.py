@@ -22,8 +22,14 @@ class OttoBotServerTestCase(unittest.TestCase):
             db.create_all()
 
             # Insert testing data
-            Stock(test_stock_1_ticker, test_stock_1_date, Close=test_stock_1_close).save()
-            Stock(test_stock_2_ticker, test_stock_2_date, Close=test_stock_2_close).save()
+            Stock(test_stock_1_ticker, test_stock_1_date_1,
+                  close=test_stock_1_close_1).save()
+            Stock(test_stock_1_ticker, test_stock_1_date,
+                  close=test_stock_1_close).save()
+            Stock(test_stock_2_ticker, test_stock_2_date_1,
+                  close=test_stock_2_close_1).save()
+            Stock(test_stock_2_ticker, test_stock_2_date,
+                  close=test_stock_2_close).save()
             User(test_user_id, test_user_name).save()
             Watchlist(test_stock_1_ticker, test_user_id).save()
             Watchlist(test_stock_2_ticker, test_user_id).save()
@@ -119,7 +125,8 @@ class OttoBotServerTestCase(unittest.TestCase):
 
         # Assert
         self.assertEqual(res.status_code, 200)
-        self.assertIn(RESPONSE_intent_add_to_watchlist_ask_confirmation, str(res.data))
+        self.assertIn(RESPONSE_intent_add_to_watchlist_ask_confirmation,
+                      str(res.data))
 
     def tearDown(self):
         """teardown all initialized variables."""

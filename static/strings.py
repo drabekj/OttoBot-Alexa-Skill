@@ -8,7 +8,7 @@ INTENT_STOCK_PRICE_MSG_FAIL = "Sorry, there was a problem getting data for {}"
 
 # Watchlist
 INTENT_WATCHLIST_REPORT_MSG_INTRO = "Here is your watchlist:"
-INTENT_WATCHLIST_REPORT_MSG_BODY = " stock {} is valued at ${}"
+INTENT_WATCHLIST_REPORT_MSG_BODY = " stock {} is {} {:.2f}%"
 INTENT_WATCHLIST_EMPTY_MSG = "Your watchlist is empty. "
 
 INTENT_ADD_TO_WATCHLIST_ASK_CONFIRMATION = "Should I add stock {}? "

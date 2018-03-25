@@ -2,7 +2,7 @@ import unittest
 
 from flask import json
 
-from app import create_app, db, logger
+from app import create_app, db
 from app.models import Stock, User, Watchlist
 from test.sample_requests import *
 
@@ -21,7 +21,7 @@ class RemoveFromWatchlistTestCase(unittest.TestCase):
             db.create_all()
 
             # Insert testing data
-            Stock(test_stock_1_ticker, test_stock_1_date, Close=test_stock_1_close).save()
+            Stock(test_stock_1_ticker, test_stock_1_date, close=test_stock_1_close).save()
             User(test_user_id, test_user_name).save()
             Watchlist(test_add_stock, test_user_id).save()
 
