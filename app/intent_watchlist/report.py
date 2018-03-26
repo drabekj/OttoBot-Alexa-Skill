@@ -3,6 +3,7 @@ from flask_sqlalchemy import BaseQuery
 
 from app import ResponseBuilder, logger
 from app.models import Watchlist, Stock
+from app.utils import Ticker2Name
 from app.utils.MyError import UnknownStockError
 from app.utils.authentication import authenticated
 from static import strings
@@ -39,8 +40,9 @@ def _build_report_msg(ticker_list, changes):
             else:
                 movement = "up"
 
+            company_name = Ticker2Name.ticker_to_name(ticker)
             message += strings.INTENT_WATCHLIST_REPORT_MSG_BODY \
-                .format(ticker, movement, abs(changes[index]))
+                .format(company_name, movement, abs(changes[index]))
         except AttributeError:
             raise UnknownStockError()
 
