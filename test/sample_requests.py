@@ -26,6 +26,7 @@ test_user_name = "John"
 access_token = "EAAdvSgyprPcBAGWGAKsr03UddHlyX6JiqV9v7aAvGxfNBRNAKCAfrJ6uDD4ixxkX6TAWxZC9F6kTKS2edxg3cZBW9CZBQ1zuM8HKhPc45bIrC3OADEPGIKGm2i0o5eH3sa9p5c6QXrN1jdzYAW0vCAVBGZA1wDk3s7IrZAjVwXgZDZD"
 
 test_add_stock = "AMZN"
+test_add_company = "Amazon"
 
 
 def launch_request():
@@ -757,7 +758,7 @@ def intent_education_equity():
                 },
                 'user': {
                     'userId': 'amzn1.ask.account.AF64Z7P3TBODT4C6VB4SUJG67LSDJXMRPB4ZCN72Z5VSCFIS6COGQPHPPZCTUFCKYVNG37E56FUQHEHZQEMDEZHDP6EJ4ML6CZHBOKETG3TF44YRKRRIHUF4TMFMDKXSSPXBKW62LQVB4JNZ4NPGW5YMTRZZHNBFEYU7J4XF6MZPZRYA4KRS3ZKJHPHSKRB6ZOAHNXQ56T2HP7A',
-                    'accessToken':access_token
+                    'accessToken': access_token
                 },
                 'device': {
                     'deviceId': 'amzn1.ask.device.AHDOK5CWXV4NE5TF26TG5TYEADGUXG2VGOZVSI26DKPB2SHOPZIK7IP6PB242QH4JSHRVNBXXOCKROBQ3MGYAB5AKBFX36SE6TKYW6C7AYLYQFNOLG2MNZDZ2IONXJCOZDUWQURABRQSRHZNB3N3OCHVCK7TCGTCPZJTNX76ARBSTZSREG2JG',
@@ -805,3 +806,75 @@ def intent_education_equity():
 
 
 RESPONSE_intent_education_equity = TERM_EQUITY
+
+
+def intent_news_about_company():
+    return {
+        'version': '1.0',
+        'session': {
+            'new': False,
+            'sessionId': 'amzn1.echo-api.session.729a6db6-0611-4fac-aa35-a91f0db5c024',
+            'application': {
+                'applicationId': 'amzn1.ask.skill.dba1346e-5f4a-4f9e-9d14-dc61dd084f96'
+            },
+            'user': {
+                'userId': 'amzn1.ask.account.AF64Z7P3TBODT4C6VB4SUJG67LSDJXMRPB4ZCN72Z5VSCFIS6COGQPHPPZCTUFCKYVNG37E56FUQHEHZQEMDEZHDP6EJ4ML6CZHBOKETG3TF44YRKRRIHUF4TMFMDKXSSPXBKW62LQVB4JNZ4NPGW5YMTRZZHNBFEYU7J4XF6MZPZRYA4KRS3ZKJHPHSKRB6ZOAHNXQ56T2HP7A',
+                'accessToken': 'EAAdvSgyprPcBAIKigdddcnZACP9WfbhiIPxTW1UHvW3sWu24S9AXNrbuzPWLoEIxxo8rQaqPZAZBCaHkr0gsTegIpTHIJNHQvQd59ABekEMNMB0xUgZBGJkZByydtZCT6yOwE4rMOg33t3TzO2j1SJFvqymbP1qEIfg5lGu1byUQZDZD'
+            }
+        },
+        'context': {
+            'System': {
+                'application': {
+                    'applicationId': 'amzn1.ask.skill.dba1346e-5f4a-4f9e-9d14-dc61dd084f96'
+                },
+                'user': {
+                    'userId': 'amzn1.ask.account.AF64Z7P3TBODT4C6VB4SUJG67LSDJXMRPB4ZCN72Z5VSCFIS6COGQPHPPZCTUFCKYVNG37E56FUQHEHZQEMDEZHDP6EJ4ML6CZHBOKETG3TF44YRKRRIHUF4TMFMDKXSSPXBKW62LQVB4JNZ4NPGW5YMTRZZHNBFEYU7J4XF6MZPZRYA4KRS3ZKJHPHSKRB6ZOAHNXQ56T2HP7A',
+                    'accessToken': 'EAAdvSgyprPcBAIKigdddcnZACP9WfbhiIPxTW1UHvW3sWu24S9AXNrbuzPWLoEIxxo8rQaqPZAZBCaHkr0gsTegIpTHIJNHQvQd59ABekEMNMB0xUgZBGJkZByydtZCT6yOwE4rMOg33t3TzO2j1SJFvqymbP1qEIfg5lGu1byUQZDZD'
+                },
+                'device': {
+                    'deviceId': 'amzn1.ask.device.AHDOK5CWXV4NE5TF26TG5TYEADGUXG2VGOZVSI26DKPB2SHOPZIK7IP6PB242QH4JSHRVNBXXOCKROBQ3MGYAB5AKBFX36SE6TKYW6C7AYLYQFNOLG2MNZDZ2IONXJCOZDUWQURABRQSRHZNB3N3OCHVCK7TCGTCPZJTNX76ARBSTZSREG2JG',
+                    'supportedInterfaces': {
+                        'AudioPlayer': {}
+                    }
+                },
+                'apiEndpoint': 'https://api.amazonalexa.com',
+                'apiAccessToken': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjEifQ.eyJhdWQiOiJodHRwczovL2FwaS5hbWF6b25hbGV4YS5jb20iLCJpc3MiOiJBbGV4YVNraWxsS2l0Iiwic3ViIjoiYW16bjEuYXNrLnNraWxsLmRiYTEzNDZlLTVmNGEtNGY5ZS05ZDE0LWRjNjFkZDA4NGY5NiIsImV4cCI6MTUyMjA3Njk0NSwiaWF0IjoxNTIyMDczMzQ1LCJuYmYiOjE1MjIwNzMzNDUsInByaXZhdGVDbGFpbXMiOnsiY29uc2VudFRva2VuIjpudWxsLCJkZXZpY2VJZCI6ImFtem4xLmFzay5kZXZpY2UuQUhET0s1Q1dYVjRORTVURjI2VEc1VFlFQURHVVhHMlZHT1pWU0kyNkRLUEIyU0hPUFpJSzdJUDZQQjI0MlFINEpTSFJWTkJYWE9DS1JPQlEzTUdZQUI1QUtCRlgzNlNFNlRLWVc2QzdBWUxZUUZOT0xHMk1OWkRaMklPTlhKQ09aRFVXUVVSQUJSUVNSSFpOQjNOM09DSFZDSzdUQ0dUQ1BaSlROWDc2QVJCU1RaU1JFRzJKRyIsInVzZXJJZCI6ImFtem4xLmFzay5hY2NvdW50LkFGNjRaN1AzVEJPRFQ0QzZWQjRTVUpHNjdMU0RKWE1SUEI0WkNONzJaNVZTQ0ZJUzZDT0dRUEhQUFpDVFVGQ0tZVk5HMzdFNTZGVVFIRUhaUUVNREVaSERQNkVKNE1MNkNaSEJPS0VURzNURjQ0WVJLUlJJSFVGNFRNRk1ES1hTU1BYQktXNjJMUVZCNEpOWjROUEdXNVlNVFJaWkhOQkZFWVU3SjRYRjZNWlBaUllBNEtSUzNaS0pIUEhTS1JCNlpPQUhOWFE1NlQySFA3QSJ9fQ.blpu80Ylk7TpYqc5oaQ_OSA20xvbsdhVlH9DcJ8P-qHqiyZ9O4LDD3EkNISfjk1hFBMTypbMp1J4MeGbqMl8f7OczvHOFqriIhYWrko9uVXEX0TaXui08XTDzw1ElbdE3oYvZhYT3ITNm50Ln5ycgqTPB9ASqoqToZyy7VsCOGoTRTel1f9KbR7qdM7te0E4FQuxqG2LjpPu0LvQJddPyoly1TPINCH-2ogZSlaxQoZYH0fsxCKYLbyGZMCklfPUxVA8PJ72E5NlNIxep4LMcruWuFwPyaIUQeA_It6Be9KQ8NaL0Ie5OD3GpOl76PlgR8hZWZq_2cpHKCIEsAlDDg'
+            }
+        },
+        'request': {
+            'type': 'IntentRequest',
+            'requestId': 'amzn1.echo-api.request.dae00bae-6a6f-446b-be73-d7070107f045',
+            'timestamp': '2018-03-26T14:09:05Z',
+            'locale': 'en-US',
+            'intent': {
+                'name': 'NewsAboutCompanyIntent',
+                'confirmationStatus': 'NONE',
+                'slots': {
+                    'stockTicker': {
+                        'name': 'stockTicker',
+                        'value': test_add_company,
+                        'resolutions': {
+                            'resolutionsPerAuthority': [{
+                                'authority': 'amzn1.er-authority.echo-sdk.amzn1.ask.skill.dba1346e-5f4a-4f9e-9d14-dc61dd084f96.LIST_OF_TICKERS',
+                                'status': {
+                                    'code': 'ER_SUCCESS_MATCH'
+                                },
+                                'values': [{
+                                    'value': {
+                                        'name': test_add_stock,
+                                        'id': 'b004b3ecde24c85e32c1923f10d3fb62'
+                                    }
+                                }]
+                            }]
+                        },
+                        'confirmationStatus': 'NONE'
+                    }
+                }
+            },
+            'dialogState': 'STARTED'
+        }
+    }
+
+
+RESPONSE_intent_news_about_company = "Here are some news about {}" \
+    .format(test_add_company)
