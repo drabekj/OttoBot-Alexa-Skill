@@ -11,8 +11,10 @@ class FeedReader(object):
         :param limit: limit the number of titles received
         :return: [string]
         """
+        articles = []
         for index, article in enumerate(self.data['entries']):
             if index >= limit:
                 break
+            articles.append(article['title'])
 
-            print(article['title'])
+        return articles

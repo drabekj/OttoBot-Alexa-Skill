@@ -852,7 +852,7 @@ def intent_news_about_company():
                 'slots': {
                     'stockTicker': {
                         'name': 'stockTicker',
-                        'value': test_add_company,
+                        'value': test_stock_1_name,
                         'resolutions': {
                             'resolutionsPerAuthority': [{
                                 'authority': 'amzn1.er-authority.echo-sdk.amzn1.ask.skill.dba1346e-5f4a-4f9e-9d14-dc61dd084f96.LIST_OF_TICKERS',
@@ -861,7 +861,7 @@ def intent_news_about_company():
                                 },
                                 'values': [{
                                     'value': {
-                                        'name': test_add_stock,
+                                        'name': test_stock_1_ticker,
                                         'id': 'b004b3ecde24c85e32c1923f10d3fb62'
                                     }
                                 }]
@@ -876,5 +876,5 @@ def intent_news_about_company():
     }
 
 
-RESPONSE_intent_news_about_company = "Here are some news about {}" \
-    .format(test_add_company)
+RESPONSE_intent_news_about_company = INTENT_NEWS_ABOUT_COMPANY_INTRO \
+    .format(test_stock_1_name)
