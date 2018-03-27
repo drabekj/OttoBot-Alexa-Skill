@@ -6,7 +6,7 @@ from app import create_app
 from test.sample_requests import *
 
 
-class AddToWatchlistTestCase(unittest.TestCase):
+class EducationTestCase(unittest.TestCase):
     """This class represents the OttoBot routing test case"""
 
     def setUp(self):
