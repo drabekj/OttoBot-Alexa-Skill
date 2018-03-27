@@ -3,6 +3,11 @@ REQUEST_LAUNCH_REPROMPT = "Go on, tell me what can I do for you."
 
 REQUEST_END_MSG = "Bye bye. "
 
+# General
+INTENT_GENERAL_OK = "Ok then."
+INTENT_GENERAL_REPROMPT = "Is there something else I can help you with?"
+
+# Price
 INTENT_STOCK_PRICE_MSG = "The price of {0} is ${1}."
 INTENT_STOCK_PRICE_MSG_FAIL = "Sorry, there was a problem getting data for {}"
 
@@ -24,13 +29,17 @@ INTENT_REMOVE_FROM_WATCHLIST_CONFIRMED = "Ok, removing {} from watchlist. "
 INTENT_REMOVE_FROM_WATCHLIST_NOT_THERE = "There is no stock {} in your watchlist. "
 INTENT_REMOVE_FROM_WATCHLIST_FAIL = "Couldn't remove stock from watchlist. "
 
-INTENT_GENERAL_REPROMPT = "Is there something else I can help you with?"
-
 # Education
 INTENT_EDU_IN_CONSTRUCTION = "Can't explain {} right now."
 
 # News
 INTENT_NEWS_ABOUT_COMPANY_INTRO = "Here are some articles mentioning {}: "
+INTENT_NEWS_ABOUT_COMPANY_ASK_MORE_INFO = "Should I send you a link to one of the articles? "
+INTENT_NEWS_ABOUT_COMPANY_ASK_ARTICLE_NO = "Which one? "
+INTENT_NEWS_ABOUT_COMPANY_FAIL_ARTICLE_NOT_FOUND = "Sorry, couldn't find this article. "
+INTENT_NEWS_ABOUT_COMPANY_LINK_SENT = "Article link was sent to your device. "
+INTENT_NEWS_ABOUT_COMPANY_LINK_CARD_TITLE = "Link to article about {}"
+INTENT_NEWS_ABOUT_COMPANY_LINK_CARD_CONTENT = "Here is your link: {}"
 
 # Error states
 ERROR_NOT_AUTHENTICATED = "First you need to authenticate in the Alexa App."

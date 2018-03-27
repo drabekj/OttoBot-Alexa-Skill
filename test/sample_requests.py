@@ -877,4 +877,84 @@ def intent_news_about_company():
 
 
 RESPONSE_intent_news_about_company = INTENT_NEWS_ABOUT_COMPANY_INTRO \
-    .format(test_stock_1_name)
+    .format(test_stock_1_name) + "<break time=\\\'1000ms\\\'/>"
+
+
+def intent_news_send_link():
+    return {
+        'version': '1.0',
+        'session': {
+            'new': False,
+            'sessionId': 'amzn1.echo-api.session.a9f8c241-740c-4831-bd3c-aba7a976499d',
+            'application': {
+                'applicationId': 'amzn1.ask.skill.dba1346e-5f4a-4f9e-9d14-dc61dd084f96'
+            },
+            'user': {
+                'userId': 'amzn1.ask.account.AF64Z7P3TBODT4C6VB4SUJG67LSDJXMRPB4ZCN72Z5VSCFIS6COGQPHPPZCTUFCKYVNG37E56FUQHEHZQEMDEZHDP6EJ4ML6CZHBOKETG3TF44YRKRRIHUF4TMFMDKXSSPXBKW62LQVB4JNZ4NPGW5YMTRZZHNBFEYU7J4XF6MZPZRYA4KRS3ZKJHPHSKRB6ZOAHNXQ56T2HP7A',
+                'accessToken': access_token
+            }
+        },
+        'context': {
+            'AudioPlayer': {
+                'playerActivity': 'STOPPED'
+            },
+            'System': {
+                'application': {
+                    'applicationId': 'amzn1.ask.skill.dba1346e-5f4a-4f9e-9d14-dc61dd084f96'
+                },
+                'user': {
+                    'userId': 'amzn1.ask.account.AF64Z7P3TBODT4C6VB4SUJG67LSDJXMRPB4ZCN72Z5VSCFIS6COGQPHPPZCTUFCKYVNG37E56FUQHEHZQEMDEZHDP6EJ4ML6CZHBOKETG3TF44YRKRRIHUF4TMFMDKXSSPXBKW62LQVB4JNZ4NPGW5YMTRZZHNBFEYU7J4XF6MZPZRYA4KRS3ZKJHPHSKRB6ZOAHNXQ56T2HP7A',
+                    'accessToken': access_token
+                },
+                'device': {
+                    'deviceId': 'amzn1.ask.device.AHDOK5CWXV4NE5TF26TG5TYEADGUXG2VGOZVSI26DKPB2SHOPZIK7IP6PB242QH4JSHRVNBXXOCKROBQ3MGYAB5AKBFX36SE6TKYW6C7AYLYQFNOLG2MNZDZ2IONXJCOZDUWQURABRQSRHZNB3N3OCHVCK7TCGTCPZJTNX76ARBSTZSREG2JG',
+                    'supportedInterfaces': {
+                        'AudioPlayer': {}
+                    }
+                },
+                'apiEndpoint': 'https://api.amazonalexa.com',
+                'apiAccessToken': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjEifQ.eyJhdWQiOiJodHRwczovL2FwaS5hbWF6b25hbGV4YS5jb20iLCJpc3MiOiJBbGV4YVNraWxsS2l0Iiwic3ViIjoiYW16bjEuYXNrLnNraWxsLmRiYTEzNDZlLTVmNGEtNGY5ZS05ZDE0LWRjNjFkZDA4NGY5NiIsImV4cCI6MTUyMjE1MjY1NCwiaWF0IjoxNTIyMTQ5MDU0LCJuYmYiOjE1MjIxNDkwNTQsInByaXZhdGVDbGFpbXMiOnsiY29uc2VudFRva2VuIjpudWxsLCJkZXZpY2VJZCI6ImFtem4xLmFzay5kZXZpY2UuQUhET0s1Q1dYVjRORTVURjI2VEc1VFlFQURHVVhHMlZHT1pWU0kyNkRLUEIyU0hPUFpJSzdJUDZQQjI0MlFINEpTSFJWTkJYWE9DS1JPQlEzTUdZQUI1QUtCRlgzNlNFNlRLWVc2QzdBWUxZUUZOT0xHMk1OWkRaMklPTlhKQ09aRFVXUVVSQUJSUVNSSFpOQjNOM09DSFZDSzdUQ0dUQ1BaSlROWDc2QVJCU1RaU1JFRzJKRyIsInVzZXJJZCI6ImFtem4xLmFzay5hY2NvdW50LkFGNjRaN1AzVEJPRFQ0QzZWQjRTVUpHNjdMU0RKWE1SUEI0WkNONzJaNVZTQ0ZJUzZDT0dRUEhQUFpDVFVGQ0tZVk5HMzdFNTZGVVFIRUhaUUVNREVaSERQNkVKNE1MNkNaSEJPS0VURzNURjQ0WVJLUlJJSFVGNFRNRk1ES1hTU1BYQktXNjJMUVZCNEpOWjROUEdXNVlNVFJaWkhOQkZFWVU3SjRYRjZNWlBaUllBNEtSUzNaS0pIUEhTS1JCNlpPQUhOWFE1NlQySFA3QSJ9fQ.IKkIGLaHj4kngyHzhBogIN57HU4-iLKHrP_Hzn3zD2wW9bxjX1evYwLZIOinUwUJxj6uBuM6_XxyK1d0DjttjH4yLDrLIGEQRzKVx9UDpDonLA_ZjqSKbSJiBHgKKzAEYLXtlf_tuz4NtuTMjN88jSfzEeX6LvRlod1lOmYGWbgu8IWNEopAgAPCMjZbWNwkm5p0AVpZr3QSvjfNmGTbRQnVG6sxqxpgmNic1A_JmoYTnPr-pvjX_61Sg-NrlelKRlU6LKifM_KF7xA4Br_3VnT7RXepu0osJ5ZseK8MvLa4fEZtDUuPYwcGH3zsp1i5eJQtq-PQiQjGheKwGtTIKA'
+            }
+        },
+        'request': {
+            'type': 'IntentRequest',
+            'requestId': 'amzn1.echo-api.request.2febd657-9e04-432c-8bf9-c1ec46aee2d0',
+            'timestamp': '2018-03-27T11:10:54Z',
+            'locale': 'en-US',
+            'intent': {
+                'name': 'NewsAboutCompanyIntent',
+                'confirmationStatus': 'CONFIRMED',
+                'slots': {
+                    'stockTicker': {
+                        'name': 'stockTicker',
+                        'value': test_stock_1_name,
+                        'resolutions': {
+                            'resolutionsPerAuthority': [{
+                                'authority': 'amzn1.er-authority.echo-sdk.amzn1.ask.skill.dba1346e-5f4a-4f9e-9d14-dc61dd084f96.LIST_OF_TICKERS',
+                                'status': {
+                                    'code': 'ER_SUCCESS_MATCH'
+                                },
+                                'values': [{
+                                    'value': {
+                                        'name': test_stock_1_ticker,
+                                        'id': '261fd26b0151a81370d097e4ed4c6505'
+                                    }
+                                }]
+                            }]
+                        },
+                        'confirmationStatus': 'NONE'
+                    },
+                    'articleNo': {
+                        'name': 'articleNo',
+                        'value': '1',
+                        'confirmationStatus': 'NONE'
+                    }
+                }
+            },
+            'dialogState': 'IN_PROGRESS'
+        }
+    }
+
+
+RESPONSE_intent_news_send_link = INTENT_NEWS_ABOUT_COMPANY_LINK_CARD_CONTENT \
+    .format("https://")
