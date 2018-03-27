@@ -877,7 +877,7 @@ def intent_news_about_company():
 
 
 RESPONSE_intent_news_about_company = INTENT_NEWS_ABOUT_COMPANY_INTRO \
-    .format(test_stock_1_name) + "<break time=\\\'1000ms\\\'/>"
+    .format(test_stock_1_name) + "<break time=\\\'700ms\\\'/>"
 
 
 def intent_news_send_link():

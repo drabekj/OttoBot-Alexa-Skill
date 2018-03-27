@@ -40,7 +40,7 @@ def _build_read_titles_msg(headings, ticker):
     company = Ticker2Name.ticker_to_name(ticker)
 
     msg_body = ""
-    ssml_strong_break = "<break time='1000ms'/>"
+    ssml_strong_break = "<break time='700ms'/>"
     for heading in headings:
         msg_body += ssml_strong_break + heading + "."
 
