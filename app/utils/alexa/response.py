@@ -105,7 +105,7 @@ class ResponseBuilder(object):
         return {"outputSpeech": data}
 
     @classmethod
-    def create_card(self, title=None, subtitle=None, content=None,
+    def create_card(self, title=None, content=None, subtitle=None,
                     card_type="Simple"):
         """
         card_obj = JSON card object to substitute the 'card' field in the raw_response

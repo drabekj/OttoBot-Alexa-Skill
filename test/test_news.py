@@ -27,8 +27,8 @@ class NewsTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 200)
         self.assertIn(RESPONSE_intent_news_about_company, str(res.data))
 
-    def test_intent_news_send_link(self):
-        """Test that user will be presented with company headlines."""
+    def test_intent_news_send_article_card(self):
+        """Test that user will get article in card."""
         # Setup
         request = json.dumps(intent_news_send_link())
 
@@ -38,7 +38,9 @@ class NewsTestCase(unittest.TestCase):
 
         # Assert
         self.assertEqual(res.status_code, 200)
-        self.assertIn(RESPONSE_intent_news_send_link, str(res.data))
+        # Check if card content has some content (at least 100 characters)
+        card_content = json.loads(res.data)['response']['card']['content']
+        self.assertTrue(len(card_content) > 100)
 
     def tearDown(self):
         """teardown all initialized variables."""

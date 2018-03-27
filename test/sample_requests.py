@@ -954,7 +954,3 @@ def intent_news_send_link():
             'dialogState': 'IN_PROGRESS'
         }
     }
-
-
-RESPONSE_intent_news_send_link = INTENT_NEWS_ABOUT_COMPANY_LINK_CARD_CONTENT \
-    .format("http")

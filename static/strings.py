@@ -37,9 +37,9 @@ INTENT_NEWS_ABOUT_COMPANY_INTRO = "Here are some articles mentioning {}: "
 INTENT_NEWS_ABOUT_COMPANY_ASK_MORE_INFO = "Should I send you a link to one of the articles? "
 INTENT_NEWS_ABOUT_COMPANY_ASK_ARTICLE_NO = "Which one? "
 INTENT_NEWS_ABOUT_COMPANY_FAIL_ARTICLE_NOT_FOUND = "Sorry, couldn't find this article. "
-INTENT_NEWS_ABOUT_COMPANY_LINK_SENT = "Article link was sent to your device. "
-INTENT_NEWS_ABOUT_COMPANY_LINK_CARD_TITLE = "Link to article about {}"
-INTENT_NEWS_ABOUT_COMPANY_LINK_CARD_CONTENT = "Here is your link: {}"
+INTENT_NEWS_ABOUT_COMPANY_ARTICLE_SENT = "Article was sent to your device. "
+INTENT_NEWS_ABOUT_COMPANY_ARTICLE_CARD_TITLE = "Article about {}"
+INTENT_NEWS_ABOUT_COMPANY_ARTICLE_CARD_CONTENT = "{}"
 
 # Error states
 ERROR_NOT_AUTHENTICATED = "First you need to authenticate in the Alexa App."

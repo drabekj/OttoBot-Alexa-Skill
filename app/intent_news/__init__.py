@@ -3,6 +3,7 @@ from app.utils import Ticker2Name
 from app.utils.FeedReader import FeedReader
 from static import strings
 
+news_count = 3
 
 def handle_news(request):
     """:type request AlexaRequest"""
@@ -19,15 +20,15 @@ def handle_news(request):
                 message = strings.INTENT_GENERAL_OK
                 return ResponseBuilder.create_response(request, message=message)
         else:
-            # Send user link to full article
-            return _handle_dialog_send_link(request)
+            # Send user full article in a card
+            return _handle_dialog_send_article(request)
 
 
 def _handle_dialog_read_titles(request):
     """ Create a response with titles of articles about given company.
     :type request AlexaRequest"""
     ticker = request.get_slot_value('stockTicker')
-    headings = FeedReader(ticker).get_articles_titles()
+    headings = FeedReader(ticker).get_articles_titles(limit=news_count)
     message = _build_read_titles_msg(headings, ticker)
 
     return ResponseBuilder \
@@ -57,26 +58,30 @@ def _handle_dialog_which_one(request):
         .with_dialog_elicit_slot()
 
 
-def _handle_dialog_send_link(request):
-    """Create a response with link for requested article."""
+def _handle_dialog_send_article(request):
+    """Create a response with card containing requested article."""
     reprompt = strings.INTENT_GENERAL_REPROMPT
+
     ticker = request.get_slot_value('stockTicker')
     company = Ticker2Name.ticker_to_name(ticker)
     article_no = int(request.get_slot_value('articleNo')) - 1
+    # last news
+    if article_no == -1:
+        article_no = news_count - 1
 
-    article_url = FeedReader(ticker).get_article_link(article_no)
-    if article_url is None:
+    article_body = FeedReader(ticker).get_article_body(article_no)
+    if article_body is None:
         # Article not found
         message = strings.INTENT_NEWS_ABOUT_COMPANY_FAIL_ARTICLE_NOT_FOUND
         return ResponseBuilder.create_response(request, message=message) \
             .with_reprompt(reprompt)
 
     # Build response
-    message = strings.INTENT_NEWS_ABOUT_COMPANY_LINK_SENT
-    card_title = strings.INTENT_NEWS_ABOUT_COMPANY_LINK_CARD_TITLE \
+    message = strings.INTENT_NEWS_ABOUT_COMPANY_ARTICLE_SENT
+    card_title = strings.INTENT_NEWS_ABOUT_COMPANY_ARTICLE_CARD_TITLE \
         .format(company)
-    card_content = strings.INTENT_NEWS_ABOUT_COMPANY_LINK_CARD_CONTENT \
-        .format(article_url)
+    card_content = strings.INTENT_NEWS_ABOUT_COMPANY_ARTICLE_CARD_CONTENT \
+        .format(article_body)
     return ResponseBuilder.create_response(request, message=message) \
         .with_reprompt(reprompt) \
         .with_card(card_title, content=card_content)

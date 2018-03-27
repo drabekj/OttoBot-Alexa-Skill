@@ -1,4 +1,7 @@
+from urllib.request import urlopen
+
 import feedparser
+from bs4 import BeautifulSoup as bs
 
 from app import logger
 
@@ -36,3 +39,30 @@ class FeedReader(object):
             return None
 
         return link
+
+    def get_article_body(self, index):
+        """ Get the text body of article at {index}
+        :return: str or None if failed
+        """
+        url = self.get_article_link(index)
+        soup = bs(urlopen(url), "html.parser")
+
+        article_body = soup.find(id="articlebody")
+
+        # kill all script and style elements
+        for script in article_body(["script", "style"]):
+            script.extract()
+
+        # get text
+        text = article_body.get_text()
+
+        # break into lines and remove leading and trailing space on each
+        lines = (line.strip() for line in text.splitlines())
+        # break multi-headlines into a line each
+        chunks = (phrase.strip() for line in lines for phrase in
+                  line.split("  "))
+        # drop blank lines
+        text = '\n'.join(chunk for chunk in chunks if chunk)
+
+        return text
+        
