@@ -1,7 +1,7 @@
 from urllib.request import urlopen
 
 import feedparser
-from bs4 import BeautifulSoup as bs
+from bs4 import BeautifulSoup as bs, NavigableString, Comment
 
 from app import logger
 
@@ -35,7 +35,7 @@ class FeedReader(object):
             article = self.data['entries'][index]
             link = article['feedburner_origlink']
         except Exception as e:
-            logger.exception(f"Couldn't get link to article at index:{index}", e)
+            logger.exception(f"Can't get link to article at index:{index}", e)
             return None
 
         return link
@@ -45,24 +45,39 @@ class FeedReader(object):
         :return: str or None if failed
         """
         url = self.get_article_link(index)
+        logger.debug(f"article link: {url}")
+
         soup = bs(urlopen(url), "html.parser")
 
-        article_body = soup.find(id="articlebody")
+        article_text = soup.find(id="articleText")
+        if article_text is None:
+            article_text = soup.find(id="articlebody")
 
-        # kill all script and style elements
-        for script in article_body(["script", "style"]):
-            script.extract()
+        content = ""
+        for paragraph in article_text:
+            if type(paragraph) == NavigableString \
+                    or type(paragraph) == Comment \
+                    or paragraph.text == "" \
+                    or paragraph.text == "\n":
+                continue
 
-        # get text
-        text = article_body.get_text()
+            for p in paragraph:
+                if type(p) == NavigableString \
+                        or type(p) == Comment \
+                        or p.text == "" \
+                        or p.text == "\n":
+                    continue
 
-        # break into lines and remove leading and trailing space on each
-        lines = (line.strip() for line in text.splitlines())
-        # break multi-headlines into a line each
-        chunks = (phrase.strip() for line in lines for phrase in
-                  line.split("  "))
-        # drop blank lines
-        text = '\n'.join(chunk for chunk in chunks if chunk)
+                content += self._unify_spaces(p.text) + "\n"
 
-        return text
-        
+        # cut content to 7500 characters
+        if len(content) > 7500:
+            logger.warning(f"The card content is too long ({len(content)}) and will be cut.")
+            content = content[:7500] + "..."
+
+
+        return content
+
+    def _unify_spaces(self, text):
+        """Replace multiple spaces with one."""
+        return ' '.join(text.split())
