@@ -64,16 +64,19 @@ class AlexaRequest(object):
         """
         try:
             slot = self.request["request"]["intent"]["slots"][slot_name]
-            resolutions = slot['resolutions']['resolutionsPerAuthority'][0]
+            resolutions = slot.get('resolutions', {}) \
+                .get('resolutionsPerAuthority', {})
 
-            if resolutions['status']['code'] == "ER_SUCCESS_MATCH":
-                value = resolutions['values'][0]['value']['name']
+            if resolutions and resolutions[0]['status']['code'] == "ER_SUCCESS_MATCH":
+                value = resolutions[0]['values'][0]['value']['name']
             else:
                 value = self._get_slot_value_fallback(slot_name)
 
             return value
-        except:
+        except Exception as e:
             """Value not found"""
+            raise e
+            logger
             return None
 
     def _get_slot_value_fallback(self, slot_name):

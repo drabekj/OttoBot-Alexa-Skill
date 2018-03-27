@@ -44,6 +44,14 @@ class AlexaResponse(Response):
         data_json['response']['directives'] = [{'type': "Dialog.ConfirmIntent"}]
         return AlexaResponse(data_json)
 
+    def with_dialog_elicit_slot(self):
+        data_json = json.loads(self.data.decode())
+        data_json['response']['directives'] = [{
+            'type': "Dialog.ElicitSlot",
+            'slotToElicit': 'articleNo'
+        }]
+        return AlexaResponse(data_json)
+
     def set_session(self, key, value):
         data_json = json.loads(self.data.decode())
         data_json['sessionAttributes'][key] = value
