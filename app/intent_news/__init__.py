@@ -69,7 +69,9 @@ def _handle_dialog_send_article(request):
     if article_no == -1:
         article_no = news_count - 1
 
-    article_body = FeedReader(ticker).get_article_body(article_no)
+    feed_reader = FeedReader(ticker)
+    article_title = feed_reader.get_articles_titles()[article_no]
+    article_body = feed_reader.get_article_body(article_no)
     if article_body is None:
         # Article not found
         message = strings.INTENT_NEWS_ABOUT_COMPANY_FAIL_ARTICLE_NOT_FOUND
@@ -84,4 +86,4 @@ def _handle_dialog_send_article(request):
         .format(article_body)
     return ResponseBuilder.create_response(request, message=message) \
         .with_reprompt(reprompt) \
-        .with_card(card_title, content=card_content)
+        .with_card(card_title, content=card_content, subtitle=article_title)
