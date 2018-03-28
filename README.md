@@ -49,8 +49,8 @@ Passes the structured json to lambda.
 
 2) Download OttoBot latest docker container:
 
-        `docker pull drabekj/ottobot`
+	`docker pull drabekj/ottobot`
 
 3) Run Docker container (second port '3333' is the one EXPOSEd in Dockerfile), forwarding hosts port 80 to docker to ort 3333:
 
-        `docker run -p 80:3333 drabekj/ottobot`
+	`docker run -p 80:3333 drabekj/ottobot`
