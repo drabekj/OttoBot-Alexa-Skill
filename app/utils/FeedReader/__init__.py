@@ -75,7 +75,6 @@ class FeedReader(object):
             logger.warning(f"The card content is too long ({len(content)}) and will be cut.")
             content = content[:7500] + "..."
 
-
         return content
 
     def _unify_spaces(self, text):

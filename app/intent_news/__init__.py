@@ -84,6 +84,13 @@ def _handle_dialog_send_article(request):
         .format(company)
     card_content = strings.INTENT_NEWS_ABOUT_COMPANY_ARTICLE_CARD_CONTENT \
         .format(article_body)
-    return ResponseBuilder.create_response(request, message=message) \
-        .with_reprompt(reprompt) \
-        .with_card(card_title, content=card_content, subtitle=article_title)
+
+    send_as_card = True
+    if send_as_card:
+        return ResponseBuilder.create_response(request, message=message) \
+            .with_reprompt(reprompt) \
+            .with_card(card_title, content=card_content, subtitle=article_title)
+    else:
+        # Present article as speech
+        return ResponseBuilder.create_response(request, message=card_content) \
+            .with_reprompt(reprompt)

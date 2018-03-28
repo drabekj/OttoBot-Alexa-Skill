@@ -1,6 +1,6 @@
 from sqlalchemy.util import NoneType
 
-from app import ResponseBuilder
+from app import ResponseBuilder, logger
 from app.models import Stock
 from static import strings
 
@@ -13,7 +13,7 @@ def handle_get_stock_price_intent(request):
     stock = Stock.get_last(ticker)
 
     if type(stock) is NoneType:
-        print("LOG-e: There was a error getting data for {}".format(ticker))
+        logger.error(f"There was an error getting data for {ticker}")
         message = strings.INTENT_STOCK_PRICE_MSG_FAIL.format(ticker)
         response = ResponseBuilder.create_response(request, message=message)
     else:
