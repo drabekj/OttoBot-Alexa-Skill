@@ -45,7 +45,7 @@ Passes the structured json to lambda.
 ## Setup docker :wrench:
 1) Stop any running docker instances (optional)
 
-	`sudo docker stop `docker ps -aq``
+	`sudo docker stop ``docker ps -aq```
 
 2) Download OttoBot latest docker container:
 
