@@ -17,9 +17,9 @@ def handle_get_stock_price_intent(request):
         message = strings.INTENT_STOCK_PRICE_MSG_FAIL.format(ticker)
         response = ResponseBuilder.create_response(request, message=message)
     else:
-        message = strings.INTENT_STOCK_PRICE_MSG.format(stock.ticker, stock.close)
+        message = strings.INTENT_STOCK_PRICE_MSG.format(stock['ticker'], stock['price'])
         response = ResponseBuilder.create_response(request, message=message) \
-            .set_session('stockTicker', stock.ticker)
+            .set_session('stockTicker', stock['ticker'])
 
     reprompt_message = strings.INTENT_GENERAL_REPROMPT
 

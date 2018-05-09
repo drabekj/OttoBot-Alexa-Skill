@@ -1,3 +1,4 @@
+import requests
 from sqlalchemy.exc import OperationalError
 
 from app import db, logger
@@ -41,14 +42,79 @@ class Stock(db.Model):
 
     @staticmethod
     def get_last(ticker):
-        return Stock.query.filter_by(ticker=ticker) \
-            .order_by(Stock.date.desc()).first()
+        param = {
+            'symbols': ticker,
+            'types': 'quote',
+        }
+        try:
+            r = requests.get("https://api.iextrading.com/1.0/stock/market/batch", params=param)
+            r.raise_for_status()
+
+            data = r.json()
+        except requests.exceptions.HTTPError as err:
+            print("HTTPError: " + str(err))
+            return None
+        except requests.exceptions.Timeout as err:
+            print("Timeout: " + str(err))
+            return None
+        except requests.exceptions.TooManyRedirects as err:
+            print("TooManyRedirects: " + str(err))
+            return None
+        except requests.exceptions.RequestException as err:
+            print("RequestException: " + str(err))
+            return None
+
+        price = data[ticker]['quote']['latestPrice']
+
+        # return Stock.query.filter_by(ticker=ticker) \
+        #     .order_by(Stock.date.desc()).first()
+        return {
+            'ticker': ticker,
+            'price': price,
+        }
+
+    # @staticmethod
+    # def get_nth_latest(ticker, n=0):
+    #     """ Get the n-th latest entry for ticker, where n=0 is the most recent one."""
+    #     return Stock.query.filter_by(ticker=ticker) \
+    #         .order_by(Stock.date.desc()).limit(n).all()
 
     @staticmethod
-    def get_nth_latest(ticker, n=0):
-        """ Get the n-th latest entry for ticker, where n=0 is the most recent one."""
-        return Stock.query.filter_by(ticker=ticker) \
-            .order_by(Stock.date.desc()).limit(n).all()
+    def get_change_batch(ticker_list):
+        """
+        :param ticker_list:
+        :return: List of 24 hour changes
+        """
+        changes = []
+        param = {
+            'symbols': ",".join(ticker_list),
+            'types': 'quote',
+        }
+        try:
+            r = requests.get(
+                "https://api.iextrading.com/1.0/stock/market/batch",
+                params=param)
+            r.raise_for_status()
+
+            data = r.json()
+        except requests.exceptions.HTTPError as err:
+            print("HTTPError: " + str(err))
+            return None
+        except requests.exceptions.Timeout as err:
+            print("Timeout: " + str(err))
+            return None
+        except requests.exceptions.TooManyRedirects as err:
+            print("TooManyRedirects: " + str(err))
+            return None
+        except requests.exceptions.RequestException as err:
+            print("RequestException: " + str(err))
+            return None
+
+        for stock in data:
+            change = data[stock]['quote']['changePercent'] * 100
+            changes.append(change)
+
+        return changes
 
     def delete(self):
         db.session.delete(self)

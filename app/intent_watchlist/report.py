@@ -64,19 +64,7 @@ def _get_stocks(ticker_list):
 
 def _get_stocks_24h_change(ticker_list):
     """ :return: List of % 24h changes for stocks in ticker_list. """
-    changes = []
-    for ticker in ticker_list:
-        last_2_stock_entries = Stock.get_nth_latest(ticker, n=2)
-        """ :type Stock[] last_2_stock_entries """
-        price_change = _compute_percent_change(last_2_stock_entries[0].close,
-                                               last_2_stock_entries[1].close)
-
-        if price_change is None:
-            logger.error(
-                f"Watchlist contains unknown stock ticker: " + str(ticker))
-            raise UnknownStockError(ticker)
-        changes.append(price_change)
-
+    changes = Stock.get_change_batch(ticker_list)
     return changes
 
 
