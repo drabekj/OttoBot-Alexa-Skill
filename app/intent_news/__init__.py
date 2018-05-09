@@ -25,12 +25,26 @@ def handle_news(request):
 
 
 def _handle_dialog_read_titles(request):
-    """ Create a response with titles of articles about given company.
+    """ Create a response with titles of articles about given company, if ticker supported.
     :type request AlexaRequest"""
+    error_occured = False
     ticker = request.get_slot_value('stockTicker')
-    headings = FeedReader(ticker).get_articles_titles(limit=news_count)
-    message = _build_read_titles_msg(headings, ticker)
 
+    # if value contains spaces => not valid
+    if ticker is None or (' ' in ticker) == True:
+        message = strings.ERROR_NEWS_BAD_TICKER
+        error_occured = True
+
+    headings = FeedReader(ticker).get_articles_titles(limit=news_count)
+    if not headings:
+        message = strings.ERROR_NEWS_NO_NEWS.format(ticker)
+        error_occured = True
+
+    if error_occured:
+        return ResponseBuilder \
+            .create_response(request, message=message, is_ssml=False)
+
+    message = _build_read_titles_msg(headings, ticker)
     return ResponseBuilder \
         .create_response(request, message=message, is_ssml=True) \
         .with_dialog_confirm_intent()

@@ -76,8 +76,6 @@ class AlexaRequest(object):
         except Exception as e:
             """Value not found"""
             raise e
-            logger
-            return None
 
     def _get_slot_value_fallback(self, slot_name):
         """
