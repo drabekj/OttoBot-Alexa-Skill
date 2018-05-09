@@ -57,6 +57,7 @@ class FeedReader(object):
         for paragraph in article_text:
             if type(paragraph) == NavigableString \
                     or type(paragraph) == Comment \
+                    or not hasattr(paragraph, 'text') \
                     or paragraph.text == "" \
                     or paragraph.text == "\n":
                 continue
