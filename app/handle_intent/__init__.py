@@ -26,4 +26,5 @@ def handle_intent(request):
     elif intent_name == 'AMAZON.StopIntent':
         return handle_end(request)
     else:
-        raise UnknownIntentError('Cant handle this type of intent: ' + intent_name)
+        raise UnknownIntentError('Cant handle intent: ' + intent_name)
+
