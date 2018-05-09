@@ -141,8 +141,7 @@ def intent_request_get_stock_price():
     }
 
 
-RESPONSE_intent_request_get_stock_price = INTENT_STOCK_PRICE_MSG \
-    .format(test_stock_1_ticker, test_stock_1_close)
+RESPONSE_intent_request_get_stock_price = "The price of {0} is $".format(test_stock_1_ticker)
 
 
 def intent_report_watchlist():
@@ -192,12 +191,7 @@ def intent_report_watchlist():
     }
 
 
-RESPONSE_intent_report_watchlist = INTENT_WATCHLIST_REPORT_MSG_INTRO \
-                                   + INTENT_WATCHLIST_REPORT_MSG_BODY.format(
-    test_stock_1_name, "up", test_stock_1_price_change) \
-                                   + INTENT_WATCHLIST_REPORT_MSG_BODY.format(
-    test_stock_2_name, "down", test_stock_2_price_change)
-
+RESPONSE_intent_report_watchlist = INTENT_WATCHLIST_REPORT_MSG_INTRO
 RESPONSE_intent_report_empty_watchlist = INTENT_WATCHLIST_EMPTY_MSG
 
 
