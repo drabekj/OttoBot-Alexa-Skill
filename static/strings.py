@@ -44,3 +44,4 @@ INTENT_NEWS_ABOUT_COMPANY_ARTICLE_CARD_CONTENT = "{}"
 # Error states
 ERROR_NOT_AUTHENTICATED = "First you need to authenticate in the Alexa App."
 ERROR_NOT_AUTHENTICATED_REPROMPT = "Please go to the Alexa App and link your Facebook account to use this feature."
+ERROR_CANT_ADD_TO_WATCHLIST = "Sorry, I wasn't able to add stock {} to watchlist."

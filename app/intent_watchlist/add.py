@@ -30,7 +30,8 @@ def handle_add_to_watchlist(request):
 
 
 def _handle_dialog_add_started(request):
-    """:type request AlexaRequest"""
+    """ Check if the provided ticker is supported or is not already in watchlist, if not, ask for confirmation.
+    :type request AlexaRequest"""
     print("LOG-d: dialogState STARTED")
 
     # Check if ticker is provided
@@ -44,6 +45,14 @@ def _handle_dialog_add_started(request):
 
     # Ask user to confirm ticker add
     message = strings.INTENT_ADD_TO_WATCHLIST_ASK_CONFIRMATION.format(ticker)
+
+    # Check if ticker not already in Watchlist
+    user_id = request.get_user_id()
+    watchlist_tickers = Watchlist.get_users_tickers(user_id)
+    for ticker_in_watchlist in watchlist_tickers:
+        if ticker == ticker_in_watchlist:
+            message = strings.INTENT_ADDED_TO_WATCHLIST_EXISTS.format(ticker)
+
     return ResponseBuilder.create_response(request, message) \
         .with_dialog_confirm_intent()
 
@@ -60,7 +69,7 @@ def _handle_dialog_add_in_progress(request):
 
 
 def _add_ticker_to_watchlist(request):
-    """Add ticker to users Watchlist if not already there and build response.
+    """Add ticker to users Watchlist and build response.
         :type request AlexaRequest
     """
     user_id = request.get_user_id()
@@ -71,11 +80,12 @@ def _add_ticker_to_watchlist(request):
     message = strings.INTENT_ADD_TO_WATCHLIST_CONFIRMED.format(ticker)
     reprompt_message = strings.INTENT_GENERAL_REPROMPT
 
-    # Check if ticker not already in Watchlist
+    # Save stock to watchlist
     try:
+        user_id = request.get_user_id()
         Watchlist(ticker, user_id).save()
     except EntryExistsError as e:
-        message = strings.INTENT_ADDED_TO_WATCHLIST_EXISTS.format(ticker)
+        message = strings.ERROR_CANT_ADD_TO_WATCHLIST.format(ticker)
 
     return ResponseBuilder.create_response(request, message=message) \
         .with_reprompt(reprompt_message)
