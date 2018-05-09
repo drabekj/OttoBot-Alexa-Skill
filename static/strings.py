@@ -11,6 +11,10 @@ INTENT_GENERAL_REPROMPT = "Is there something else I can help you with?"
 INTENT_STOCK_PRICE_MSG = "The price of {0} is ${1}."
 INTENT_STOCK_PRICE_MSG_FAIL = "Sorry, there was a problem getting data for {}"
 
+# Market Cap
+INTENT_MARKET_CAP_MSG = "The Market Cap of {0} is ${1}."
+INTENT_MARKET_CAP_MSG_FAIL = "Sorry, there was a problem getting market capitalization for {}"
+
 # Watchlist
 INTENT_WATCHLIST_REPORT_MSG_INTRO = "Here is your watchlist:"
 INTENT_WATCHLIST_REPORT_MSG_BODY = " Stock {} is {} {:.2f}%. "

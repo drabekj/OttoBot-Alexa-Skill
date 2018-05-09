@@ -73,6 +73,28 @@ class Stock(db.Model):
             'price': price,
         }
 
+    @staticmethod
+    def get_stats(ticker):
+        try:
+            r = requests.get("https://api.iextrading.com/1.0/stock/{}/stats".format(ticker))
+            r.raise_for_status()
+
+            data = r.json()
+        except requests.exceptions.HTTPError as err:
+            print("HTTPError: " + str(err))
+            return None
+        except requests.exceptions.Timeout as err:
+            print("Timeout: " + str(err))
+            return None
+        except requests.exceptions.TooManyRedirects as err:
+            print("TooManyRedirects: " + str(err))
+            return None
+        except requests.exceptions.RequestException as err:
+            print("RequestException: " + str(err))
+            return None
+
+        return data
+
     # @staticmethod
     # def get_nth_latest(ticker, n=0):
     #     """ Get the n-th latest entry for ticker, where n=0 is the most recent one."""

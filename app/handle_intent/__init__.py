@@ -1,6 +1,7 @@
 import app.intent_stock_price as intent_stock
 from app import handle_end
 from app.intent_education import handle_education
+from app.intent_market_cap import handle_market_cap
 from app.intent_news import handle_news
 from app.intent_watchlist.add import handle_add_to_watchlist
 from app.intent_watchlist.remove import handle_remove_from_watchlist
@@ -23,6 +24,8 @@ def handle_intent(request):
         return handle_education(request)
     elif intent_name == 'NewsAboutCompanyIntent':
         return handle_news(request)
+    elif intent_name == 'MarketCapIntent':
+        return handle_market_cap(request)
     elif intent_name == 'AMAZON.StopIntent':
         return handle_end(request)
     else:

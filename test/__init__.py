@@ -4,7 +4,7 @@ from app.models import Stock
 
 
 ticker_list = ['TSLA','FB','SNAP','SQ', 'UAL']
-changes = Stock.get_change_batch(ticker_list)
+ticker = "AAPL"
 
-for item in changes:
-    print(str(item) + ",")
+data = Stock.get_stats(ticker)
+print(data)
