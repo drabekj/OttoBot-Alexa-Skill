@@ -15,6 +15,9 @@ INTENT_STOCK_PRICE_MSG_FAIL = "Sorry, there was a problem getting data for {}"
 INTENT_MARKET_CAP_MSG = "The Market Cap of {0} is ${1}."
 INTENT_MARKET_CAP_MSG_FAIL = "Sorry, there was a problem getting market capitalization for {}"
 
+# Investing Strategy
+INTENT_INVEST_STRAT_MSG = "Here is a example of investing strategy, this one is called {}. {}"
+
 # Watchlist
 INTENT_WATCHLIST_REPORT_MSG_INTRO = "Here is your watchlist:"
 INTENT_WATCHLIST_REPORT_MSG_BODY = " Stock {} is {} {:.2f}%. "
