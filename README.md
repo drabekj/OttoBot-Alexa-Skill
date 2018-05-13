@@ -17,11 +17,14 @@ Passes the structured json to lambda.
 2. Lambda
 
 	Name: OttoBotLambda
-	Region: EU (Ireland)  
-	Role: sending requests to public IP of EC2 instance 
+	Region: EU (Ireland)
+	VPC: OttoBotVPC
+	SecurityGroup: OttoBotLambdaSG
+	subnet: eu-west-1a 10.0.1.0 - eu-west-1a (public)
+	Role: sending requests to private IP of EC2 instance
 
 	Description:
-		Forwards structured json request from Alexa to EC2 via network POST request.
+		Routes requests from ASK APIs to the backend server (EC2 instance called OttoBotServer) to generate response. OttoBotLambda is a middle-man, forwards structured json request from Alexa to EC2 via network POST request.
 
 3. EC2
 
