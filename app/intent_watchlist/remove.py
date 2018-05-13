@@ -8,8 +8,11 @@ from static import strings
 
 @authenticated
 def handle_remove_from_watchlist(request):
-    """:type request AlexaRequest"""
-
+    """
+    Generate response to intent type RemoveStockFromWatchlistIntent based on the stage of the removing stock from portfolio process.
+    :type request AlexaRequest
+    :return: JSON response including appropriate response based on the stage in the removing process.
+    """
     if request.dialog_state() == "STARTED":
         return _handle_dialog_remove_started(request)
     elif request.dialog_state() == "IN_PROGRESS":
@@ -29,7 +32,10 @@ def handle_remove_from_watchlist(request):
 
 
 def _handle_dialog_remove_started(request):
-    """:type request AlexaRequest"""
+    """
+    Check if the provided ticker is valid and stock is in watchlist, if yes, ask for confirmation. Otherwise, inform about the state.
+    :type request AlexaRequest
+    """
     logger.debug("dialogState STARTED")
     user_id = request.user_id()
 
@@ -59,7 +65,10 @@ def _handle_dialog_remove_started(request):
 
 
 def _handle_dialog_remove_in_progress(request):
-    """:type request AlexaRequest"""
+    """
+    Check if the stock removing request was confirmed by the user. If it was, remove it from portfolio, otherwise do not.
+    :type request AlexaRequest
+    """
     logger.debug("dialogState IN_PROGRESS")
 
     if request.get_intent_confirmation_status() == "CONFIRMED":
@@ -71,8 +80,9 @@ def _handle_dialog_remove_in_progress(request):
 
 
 def _remove_ticker_from_watchlist(request):
-    """Remove ticker from users Watchlist if there and build response.
-        :type request AlexaRequest
+    """
+    Remove ticker from users Watchlist if there and build response.
+    :type request AlexaRequest
     """
     user_id = request.get_user_id()
     ticker = request.get_slot_value('stockTicker')

@@ -5,9 +5,13 @@ from static import strings
 
 news_count = 3
 
-def handle_news(request):
-    """:type request AlexaRequest"""
 
+def handle_news(request):
+    """
+    Generate response to intent type NewsAboutCompanyIntent based on the stage of the dialog.
+    :type request AlexaRequest
+    :return: JSON response including appropriate response based on the stage of the dialog.
+    """
     if request.dialog_state() == "STARTED":
         return _handle_dialog_read_titles(request)
     if request.dialog_state() == "IN_PROGRESS":
@@ -25,8 +29,10 @@ def handle_news(request):
 
 
 def _handle_dialog_read_titles(request):
-    """ Create a response with titles of articles about given company, if ticker supported.
-    :type request AlexaRequest"""
+    """
+    Create a response with titles of articles about given company, if ticker supported.
+    :type request AlexaRequest
+    """
     error_occured = False
     ticker = request.get_slot_value('stockTicker')
 

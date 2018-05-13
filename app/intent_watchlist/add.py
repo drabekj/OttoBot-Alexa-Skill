@@ -9,7 +9,11 @@ from static import strings
 
 @authenticated
 def handle_add_to_watchlist(request):
-    """:type request AlexaRequest"""
+    """
+    Generate response to intent type AddStockToWatchlistIntent based on the stage of the adding stock to portfolio process.
+    :type request AlexaRequest
+    :return: JSON response including appropriate response based on the stage in the adding process.
+    """
 
     if request.dialog_state() == "STARTED":
         return _handle_dialog_add_started(request)
@@ -30,8 +34,10 @@ def handle_add_to_watchlist(request):
 
 
 def _handle_dialog_add_started(request):
-    """ Check if the provided ticker is supported or is not already in watchlist, if not, ask for confirmation.
-    :type request AlexaRequest"""
+    """
+    Check if the provided ticker is supported or is not already in watchlist, if not, ask for confirmation.
+    :type request AlexaRequest
+    """
     print("LOG-d: dialogState STARTED")
 
     # Check if ticker is provided
@@ -58,7 +64,10 @@ def _handle_dialog_add_started(request):
 
 
 def _handle_dialog_add_in_progress(request):
-    """:type request AlexaRequest"""
+    """
+    Check if the stock adding request was confirmed by the user. If it was, add it to portfolio, otherwise do not add.
+    :type request AlexaRequest
+    """
     logger.debug("dialogState IN_PROGRESS")
 
     if request.get_intent_confirmation_status() == "CONFIRMED":
@@ -69,8 +78,9 @@ def _handle_dialog_add_in_progress(request):
 
 
 def _add_ticker_to_watchlist(request):
-    """Add ticker to users Watchlist and build response.
-        :type request AlexaRequest
+    """
+    Add ticker to users Watchlist and build response.
+    :type request AlexaRequest
     """
     user_id = request.get_user_id()
     ticker = request.get_slot_value('stockTicker')

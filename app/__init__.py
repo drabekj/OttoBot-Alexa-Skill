@@ -32,6 +32,9 @@ def create_app(config_name):
 
     @app.route('/', methods=['GET'])
     def test():
+        """"
+        For testing purposes only. To fin out if server is running from  e.g. browser.
+        """
         # TODO makes POST requests freeze (restart server needed)
         message = "OttoBot server is running."
         return ResponseBuilder.create_response(message=message) \
@@ -41,8 +44,10 @@ def create_app(config_name):
     @alexa_request
     def handle_request(request):
         """
-        Route POST request by request type.
+        Entrypoint of the Alexa requests. Route POST request by request type to appropriate package to handle.
         :type request: AlexaRequest
+        :param request: incoming Alexa request
+        :return: Generated JSON response answer
         """
         logger.debug(f"request intent={request.intent_name()} received: {request.request}")
 

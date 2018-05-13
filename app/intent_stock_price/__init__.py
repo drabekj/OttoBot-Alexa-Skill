@@ -6,7 +6,11 @@ from static import strings
 
 
 def handle_get_stock_price_intent(request):
-    """ :type request AlexaRequest"""
+    """
+    Generate response to intent type WhatsTheStockPriceIntent with the current price of the added ticker.
+    :type request AlexaRequest
+    :return: JSON response including stock price
+    """
     ticker = request.get_slot_value(slot_name="stockTicker").upper()
 
     # Query DB for stock data

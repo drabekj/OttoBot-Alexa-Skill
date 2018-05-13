@@ -5,7 +5,11 @@ from static import strings, strings_edu
 
 
 def handle_investing_strategy(request):
-    """ :type request AlexaRequest"""
+    """
+    Generate response to intent type InvestingStrategyIntent with explanation of a random investing strategy.
+    :type request AlexaRequest
+    :return: JSON response including investing strategy name and explanation
+    """
     strategies = strings_edu.STRATEGIES['data']
     pick = random.randint(0, len(strategies) - 1)
 

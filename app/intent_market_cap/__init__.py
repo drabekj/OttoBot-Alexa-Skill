@@ -6,7 +6,11 @@ from static import strings
 
 
 def handle_market_cap(request):
-    """ :type request AlexaRequest"""
+    """
+    Generate response to intent type MarketCapIntent with the current market cap of the ticker.
+    :type request AlexaRequest
+    :return: JSON response including market cap of the ticker
+    """
     ticker = request.get_slot_value(slot_name="stockTicker").upper()
 
     # Query DB for stock data

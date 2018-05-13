@@ -4,7 +4,11 @@ from app import ResponseBuilder, AlexaRequest
 
 
 def handle_education(request):
-    """:type request AlexaRequest"""
+    """
+    Generate response to intent type EducateIntent with explanation of the asked investing term.
+    :type request AlexaRequest
+    :return: JSON response including investing term explanation
+    """
     term = request.get_slot_value('term')
 
     message = {

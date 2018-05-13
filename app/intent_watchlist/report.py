@@ -11,7 +11,11 @@ from static import strings
 
 @authenticated
 def handle_report_stock_watchlist(request):
-    """:type request AlexaRequest"""
+    """
+    Generate response to intent type ReportStockWatchlistIntent reporting the current portfolio performance.
+    :type request AlexaRequest
+    :return: JSON response including the performance report.
+    """
     user_id = request.get_user_id()
 
     # Query DB for watchlist data
