@@ -7,6 +7,9 @@ REQUEST_END_MSG = "Bye bye. "
 INTENT_GENERAL_OK = "Ok then."
 INTENT_GENERAL_REPROMPT = "Is there something else I can help you with?"
 
+# Help
+INTENT_HELP = "Looks like you are confused. You can ask about a stock price, market cap of a company, add and remove stocks from virtual portfolio. Get a performance report on your portfolio. You can also get an investing term explained or a investing strategy. You can even ask bout the news regarding a traded company. What would like to do?"
+
 # Price
 INTENT_STOCK_PRICE_MSG = "The price of {0} is ${1}."
 INTENT_STOCK_PRICE_MSG_FAIL = "Sorry, there was a problem getting data for {}"
