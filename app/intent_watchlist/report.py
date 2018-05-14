@@ -21,16 +21,30 @@ def handle_report_stock_watchlist(request):
     # Query DB for watchlist data
     ticker_list = Watchlist.get_users_tickers(user_id)
     changes = _get_stocks_24h_change(ticker_list)
-    """:type stocks list[Watchlist]"""
 
-    # Prepare response
-    if not changes:
-        message = strings.INTENT_WATCHLIST_EMPTY_MSG
-    else:
+    if len(ticker_list) > 2:
+        max_idx = _find_biggest_value(changes)
+        gainer_ticker = ticker_list.pop(max_idx)
+        gainer_value = changes.pop(max_idx)
+        min_idx = _find_smallest_value(changes)
+        loser_ticker = ticker_list.pop(min_idx)
+        loser_value = changes.pop(min_idx)
+
+        gainer_message = strings.INTENT_WATCHLIST_REPORT_TOP_STOCK.format(
+            gainer_ticker,
+            _get_movement_direction(gainer_value),
+            abs(gainer_value))
+        loser_message = strings.INTENT_WATCHLIST_REPORT_WORST_STOCK.format(
+            loser_ticker, _get_movement_direction(loser_value),
+            abs(loser_value))
+
+        message = gainer_message + loser_message + _build_report_msg(ticker_list, changes)
+    elif len(ticker_list) == 2 or len(ticker_list) == 1:
         message = _build_report_msg(ticker_list, changes)
+    else:
+        message = strings.INTENT_WATCHLIST_EMPTY_MSG
 
     reprompt_message = strings.INTENT_GENERAL_REPROMPT
-
     return ResponseBuilder.create_response(request, message=message) \
         .with_reprompt(reprompt_message)
 
@@ -39,10 +53,7 @@ def _build_report_msg(ticker_list, changes):
     message = strings.INTENT_WATCHLIST_REPORT_MSG_INTRO
     for index, ticker in enumerate(ticker_list):
         try:
-            if changes[index] < 0:
-                movement = "down"
-            else:
-                movement = "up"
+            movement = _get_movement_direction(changes[index])
 
             company_name = Ticker2Name.ticker_to_name(ticker)
             message += strings.INTENT_WATCHLIST_REPORT_MSG_BODY \
@@ -74,3 +85,44 @@ def _get_stocks_24h_change(ticker_list):
 
 def _compute_percent_change(start_val, end_val):
     return 100 - 100 / start_val * end_val
+
+
+def _find_biggest_value(list):
+    """
+    Get the intex of the largest value in list of values
+    :return: -1 if list empty, otherwise index of biggest value
+    """
+    if len(list) < 1:
+        return -1
+
+    max = 0
+    for idx, val in enumerate(list):
+        if val > list[max]:
+            max = idx
+
+    return max
+
+
+def _find_smallest_value(list):
+    """
+    Get the intex of the smallest value in list of values
+    :return: -1 if list empty, otherwise index of smallest value
+    """
+    if len(list) < 1:
+        return -1
+
+    min = 0
+    for idx, val in enumerate(list):
+        if val < list[min]:
+            min= idx
+
+    return min
+
+
+def _get_movement_direction(value):
+    if value < 0:
+        movement = "down"
+    else:
+        movement = "up"
+
+    return movement

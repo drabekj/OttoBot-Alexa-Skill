@@ -22,6 +22,8 @@ INTENT_MARKET_CAP_MSG_FAIL = "Sorry, there was a problem getting market capitali
 INTENT_INVEST_STRAT_MSG = "Here is a example of investing strategy, this one is called {}. {}"
 
 # Watchlist
+INTENT_WATCHLIST_REPORT_TOP_STOCK = "The best performing stock is {} which is {} {}%. "
+INTENT_WATCHLIST_REPORT_WORST_STOCK = "The worst performing stock is {} which is {} {}%. "
 INTENT_WATCHLIST_REPORT_MSG_INTRO = "Here is your watchlist:"
 INTENT_WATCHLIST_REPORT_MSG_BODY = " Stock {} is {} {:.2f}%. "
 INTENT_WATCHLIST_EMPTY_MSG = "Your watchlist is empty. "
