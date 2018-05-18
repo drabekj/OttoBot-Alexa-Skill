@@ -31,11 +31,12 @@ def handle_report_stock_watchlist(request):
         loser_value = changes.pop(min_idx)
 
         gainer_message = strings.INTENT_WATCHLIST_REPORT_TOP_STOCK.format(
-            gainer_ticker,
+            Ticker2Name.ticker_to_name(gainer_ticker),
             _get_movement_direction(gainer_value),
             abs(gainer_value))
         loser_message = strings.INTENT_WATCHLIST_REPORT_WORST_STOCK.format(
-            loser_ticker, _get_movement_direction(loser_value),
+            Ticker2Name.ticker_to_name(loser_ticker),
+            _get_movement_direction(loser_value),
             abs(loser_value))
 
         message = gainer_message + loser_message + _build_report_msg(ticker_list, changes)

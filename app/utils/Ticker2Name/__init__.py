@@ -5,6 +5,7 @@ from urllib.request import urlopen
 # TODO cite https://stackoverflow.com/questions/43907977/finding-company-name-from-a-ticker-in-bloomberg
 
 def ticker_to_name(ticker, corp_suffix=False):
+    """Get company name, based on ticker, if company name not found, ticker is returned."""
     url = "https://www.bloomberg.com/markets/symbolsearch?query=" + ticker
     soup = bs(urlopen(url), "html.parser")
 
@@ -17,13 +18,13 @@ def ticker_to_name(ticker, corp_suffix=False):
 
         # check if the ticker matches
         cells = row.findAll("td")
-        if cells[0].get_text().split(':')[0] == ticker:
+        if ticker in cells[0].get_text().split(':')[0]:
             company_name = cells[1].get_text()
             if corp_suffix:
                 return company_name
             else:
                 return _remove_corp_suffix(company_name)
-    return ""
+    return ticker
 
 
 def _remove_corp_suffix(company_name):
