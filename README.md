@@ -1,4 +1,7 @@
 # OttoBot Alexa skill
+<p align="center">
+<img src="https://github.com/drabekj/OttoBotServer/blob/master/documentation/img/logo.png" width="250">
+</p>
 OttoBot is a skill for Amazon Alexa which helps it's users with stock market investing. It aims at beginners and general public interested in getting into the investing domain, delivering easy to use experience thanks tho the voice user interface.
 The application backend runs on the AWS cloud platform.
 
