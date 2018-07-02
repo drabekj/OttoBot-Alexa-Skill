@@ -5,6 +5,7 @@ from app.intent_help import handle_help_intent
 from app.intent_investing_strategy import handle_investing_strategy
 from app.intent_market_cap import handle_market_cap
 from app.intent_news import handle_news
+from app.intent_recommendation import handle_recommendation
 from app.intent_watchlist.add import handle_add_to_watchlist
 from app.intent_watchlist.remove import handle_remove_from_watchlist
 from app.intent_watchlist.report import handle_report_stock_watchlist
@@ -35,6 +36,8 @@ def handle_intent(request):
         return handle_market_cap(request)
     elif intent_name == 'InvestingStrategyIntent':
         return handle_investing_strategy(request)
+    elif intent_name == 'RecommendationIntent':
+        return handle_recommendation(request)
     elif intent_name == 'AMAZON.HelpIntent':
         return handle_help_intent(request)
     elif intent_name == 'AMAZON.StopIntent':
