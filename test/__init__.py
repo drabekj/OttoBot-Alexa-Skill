@@ -4,15 +4,11 @@ import requests
 import json
 
 from app.models import Stock
+from app.utils.Sentiment import Analyst
 from static import strings_edu
 
 
-strategies = strings_edu.STRATEGIES['data']
+tslaAnalyst = Analyst("TSLA")
+tslaAnalyst.recommendation()
 
-pick = random.randint(0, len(strategies) - 1)
-
-strategy_name = strategies[pick]['name']
-strategy_content = strategies[pick]['content']
-
-print(strategy_name)
-print(strategy_content)
+print("Finish")
