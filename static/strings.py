@@ -53,6 +53,16 @@ INTENT_NEWS_ABOUT_COMPANY_ARTICLE_SENT = "Article was sent to your device. "
 INTENT_NEWS_ABOUT_COMPANY_ARTICLE_CARD_TITLE = "Article about {}"
 INTENT_NEWS_ABOUT_COMPANY_ARTICLE_CARD_CONTENT = "{}"
 
+# Analytics recommendation
+INTENT_RCMD_NO_RCMD = "There is no analyst recommendation for this stock."
+INTENT_RCMD_STRONG_BUY = "The analysts are strongly suggesting to buy this stock."
+INTENT_RCMD_BUY = "The analysts are suggesting to consider buying this stock."
+INTENT_RCMD_OPT_HOLD = "The analysts are somewhat optimistic, they are torn between holding or even buying this stock."
+INTENT_RCMD_HOLD = "The analysts suggest not making any decisions just yet, you should hold to this stock."
+INTENT_RCMD_PES_HOLD = "The analysts are worried about this one, they suggest holding, whit some intentions to selling."
+INTENT_RCMD_SELL = "The stock has been underperforming, analysts suggest considering selling."
+INTENT_RCMD_STRONG_SELL = "The analysts strongly suggest selling this stock."
+
 # Error states
 ERROR_NOT_AUTHENTICATED = "First you need to authenticate in the Alexa App."
 ERROR_NOT_AUTHENTICATED_REPROMPT = "Please go to the Alexa App and link your Facebook account to use this feature."

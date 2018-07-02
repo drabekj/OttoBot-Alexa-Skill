@@ -21,5 +21,5 @@ class Analyst(object):
             return recommendation
         except:
             logger.error(
-                f"There was an error getting analyst recommendation for {company_name}")
-            print("There is no recommendation for this stock.")
+                f"There was an error getting analyst recommendation for {self.ticker}")
+            return None
